@@ -1,4 +1,4 @@
-import {GameBoard} from "../assets/GameBoard.js";
+import {GameBoard} from "../assets/GameBoard.js"
 
 const newGrid = new GameBoard();
 
