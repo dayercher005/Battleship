@@ -9,10 +9,10 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
+/***/ "./src/assets/index.js":
+/*!*****************************!*\
+  !*** ./src/assets/index.js ***!
+  \*****************************/
 /***/ (() => {
 
 
@@ -26,7 +26,7 @@
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval-source-map devtool is used.
 /******/ 	var __webpack_exports__ = {};
-/******/ 	__webpack_modules__["./src/index.js"]();
+/******/ 	__webpack_modules__["./src/assets/index.js"]();
 /******/ 	
 /******/ })()
 ;

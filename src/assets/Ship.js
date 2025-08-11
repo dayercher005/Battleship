@@ -1,18 +1,22 @@
+export {Ship};
+
 class Ship{
 
-    constructor(length, hit, sunk){
+    constructor(length, hit){
         this.length = length;
         this.hitNumber = hit;
-        this.sunk = sunk;
+        this.sunk = false;
     }
 
     hit(){
-        this.hit++;
+        return this.hitNumber++;
     }
 
     isSunk(){
         if (this.hitNumber === this.length){
             this.sunk = true;
         }
+
+        return this.sunk
     }
 }
