@@ -1,3 +1,5 @@
+import {GameBoard} from "./GameBoard.js"
+
 export {Player}
 
 class Player{
@@ -6,5 +8,9 @@ class Player{
 
     }
 
+    getGameBoard(){
+        const newGameBoard = GameBoard();
+        return newGameBoard();
+    }
 
 }

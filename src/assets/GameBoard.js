@@ -4,8 +4,6 @@ export {GameBoard};
 
 class GameBoard{
 
-
-
     constructor(){
         this.height = 7;
         this.width = 7;
@@ -19,16 +17,15 @@ class GameBoard{
     }
 
 
-    placeShips(coordinateX, coordinateY, direction){
-        const newShip = new Ship(3, 0);
+    placeShips(shipType, direction, coordinateX, coordinateY){
 
         if (direction === "horizontal"){
-            for (let i = 0; i < newShip.length; i++){
+            for (let i = 0; i < shipType.length; i++){
                 this.gameGrid[coordinateX][coordinateY + i] = 1;
             }
             
         } else if (direction === "vertical"){
-            for (let i = 0; i < newShip.length; i++){
+            for (let i = 0; i < shipType.length; i++){
                 this.gameGrid[coordinateX + i][coordinateY] = 1;
             }
     
@@ -36,8 +33,14 @@ class GameBoard{
         return this.gameGrid;
     }
 
-    receiveAttack(coordinateX, coordinateY){
+    receiveAttack([coordinateX, coordinateY]){
+        if (this.gameGrid[coordinateX][coordinateY] === 1){
 
+        } else if (this.gameGrid[coordinateX][coordinateY] === 0){
+            
+        }
+
+        this.gameGrid[coordinateX][coordinateY] = 2;
     }
 
     trackAttacks(){

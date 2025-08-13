@@ -1,14 +1,13 @@
-import {Ship} from "../assets/Ship.js"
+import {Carrier, Patrol_Boat} from "../assets/Ship.js"
 
-const royalCaribbean = new Ship(4, 0);
-const terribleCaribbean = new Ship(5, 4);
 
 test("Ships should have hit() function that increases the number of 'hits' in ship.", () =>{
-    expect(royalCaribbean.hit()).toEqual(1);
-    expect(terribleCaribbean.hit()).toEqual(5);
+    expect(Carrier.hit()).toEqual(1);
+    expect(Patrol_Boat.hit()).toEqual(1);
+    expect(Patrol_Boat.hit()).toEqual(2);
 });
 
 test("isSunk() should dbe a function that calculates whether a ship is considered sunk based on its length and no. of hits it has received", () => {
-    expect(royalCaribbean.isSunk()).toBeFalsy();
-    expect(terribleCaribbean.isSunk()).toBeTruthy();
+    expect(Carrier.isSunk()).toBeFalsy();
+    expect(Patrol_Boat.isSunk()).toBeTruthy();
 })
