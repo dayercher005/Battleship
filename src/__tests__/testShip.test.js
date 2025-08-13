@@ -10,4 +10,5 @@ test("Ships should have hit() function that increases the number of 'hits' in sh
 test("isSunk() should dbe a function that calculates whether a ship is considered sunk based on its length and no. of hits it has received", () => {
     expect(Carrier.isSunk()).toBeFalsy();
     expect(Patrol_Boat.isSunk()).toBeTruthy();
-})
+});
+
