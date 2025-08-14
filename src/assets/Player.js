@@ -4,13 +4,13 @@ export {Player}
 
 class Player{
 
-    constructor(){
-
+    constructor(name){
+        this.name = name;
     }
 
     getGameBoard(){
-        const newGameBoard = GameBoard();
-        return newGameBoard();
+        const newGameBoard = new GameBoard();
+        return newGameBoard;
     }
 
 }

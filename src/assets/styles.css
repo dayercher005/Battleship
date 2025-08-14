@@ -1,3 +1,47 @@
+/* General CSS Styling */
+
 :root{
-    --font-family: ;
+    --font-family: Roboto;
+}
+
+*{
+    margin: 0;
+}
+
+body{
+    background:linear-gradient(#ffffff, #0a9fea);
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+/* CSS Styling for BattleShip Grids and Headers */
+
+h1[id="gameHeader"]{
+    font-family: var(--font-family);
+    text-align: center;
+    padding: 2.5%;
+}
+
+h3[class="subHeader"]{
+    text-align: center;
+    font-family: var(--font-family);
+    margin-bottom: 2%;
+}
+
+div[id="battleFields"]{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#opponentGrid, #ownGrid{
+    display: grid;
+    grid-template-columns: repeat(10, 50px);
+    grid-template-rows: repeat(10, 50px);
+}
+
+.cellButton{
+    background: hsl(0, 0%, 100%);
+    border: 2px solid black;
+    height: 50px;
+    width: 50px;
 }

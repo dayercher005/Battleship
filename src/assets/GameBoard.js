@@ -1,12 +1,10 @@
-import {Ship} from "./Ship.js"
-
 export {GameBoard};
 
 class GameBoard{
 
     constructor(){
-        this.height = 7;
-        this.width = 7;
+        this.height = 10;
+        this.width = 10;
         this.gameGrid = [];
         for(let height = 0; height < this.height; height++){
             this.gameGrid[height] = [];
