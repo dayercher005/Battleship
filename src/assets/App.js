@@ -17,13 +17,15 @@ function GameController(){
     const ShipArmy = [Carrier, BattleShip, Destroyer, Submarine, PatrolBoat];
 
     const ComputerPlacementController = () => {
+
+        const ComputerGameBoard =  ComputerPlayer.getGameBoard();
         ShipArmy.forEach((ship) => {
             const directions = ["horizontal", "vertical"]
             const randomDirectionIndex = Math.floor(Math.random() * directions.length);
             const randomDirection = directions[randomDirectionIndex];
             const ComputerCoordinateX = Math.floor(Math.random() * 10);
             const ComputerCoordinateY = Math.floor(Math.random() * 10);
-            console.log(ComputerPlayer.getGameBoard().placeShips(ship, randomDirection, ComputerCoordinateX, ComputerCoordinateY));
+            console.log(ComputerGameBoard.placeShips(ship, randomDirection, ComputerCoordinateX, ComputerCoordinateY));
             
         })
 
