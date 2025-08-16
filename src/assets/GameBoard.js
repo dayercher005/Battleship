@@ -27,6 +27,7 @@ class GameBoard{
                 this.gameGrid[coordinateX][coordinateY + i] = shipType.key;
             }
             
+            
         } else if (direction === "vertical"){
             for (let i = 0; i < shipType.length; i++){
                 this.gameGrid[coordinateX + i][coordinateY] = shipType.key;

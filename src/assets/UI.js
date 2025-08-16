@@ -1,32 +1,70 @@
-import {AppController} from "./App.js";
+import {GameController} from "./App.js";
 import {GameBoard} from "./GameBoard.js"
 
-export {renderGameBoards}
+export {renderGameBoards, UIController}
 
 function renderGameBoards() {
+
+    const newGame = GameController();
 
     const ownGrid = document.querySelector("#ownGrid");
     const opponentGrid = document.querySelector("#opponentGrid");
 
-    const newGameBoard = new GameBoard();
+    const createHumanGridBoard = () => {
+        newGame.HumanPlayer.getGameBoard().gameGrid.forEach((row, rowIndex) => {
+            row.forEach((cell, cellIndex) => {
 
-    newGameBoard.gameGrid.forEach((row) => {
-        row.forEach(() => {
-            const cellButton = document.createElement("div");
-            cellButton.classList.add("cellButton");
-            
-            ownGrid.appendChild(cellButton);
+                const cellButton = document.createElement("div");
+                cellButton.classList.add("cellButton");
+                
+                ownGrid.appendChild(cellButton);
+                cellButton.textContent = `${rowIndex}, ${cellIndex}`;
+            })
         })
-    })
+    };
 
-    newGameBoard.gameGrid.forEach((row) => {
-        row.forEach(() => {
+    const createComputerGridBoard = () => {
+
+        newGame.ComputerPlayer.getGameBoard().gameGrid.forEach((row, rowIndex) => {
+            row.forEach((cell, cellIndex) => {
             const cellButton = document.createElement("div");
             cellButton.classList.add("cellButton");
             
             opponentGrid.appendChild(cellButton);
-        })
-    })
+            cellButton.textContent = `${rowIndex}, ${cellIndex}`;
+            });    
+        });
+    };
 
+    const renderComputerShipPlacement = () => {
+
+        newGame.ComputerPlacementController();
+        newGame.ComputerPlayer.getGameBoard().gameGrid.forEach((row) => {
+            row.forEach((cell) => {
+                
+                const cellButton = document.createElement("div");
+                cellButton.classList.add("cellButton");
+                
+                if (cell !== 0){
+                    
+                    cellButton.setAttribute("style", "background-color: red;");
+                }
+
+                opponentGrid.appendChild(cellButton);
+            })
+        })
+    }
+
+    return {createHumanGridBoard, createComputerGridBoard, renderComputerShipPlacement}
+
+}
+
+
+
+function UIController(){
+
+    renderGameBoards().createHumanGridBoard();
+    renderGameBoards().createComputerGridBoard();
+    renderGameBoards().renderComputerShipPlacement();
 
 }
