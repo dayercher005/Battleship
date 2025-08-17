@@ -1,5 +1,4 @@
 import {GameController} from "./App.js";
-import {GameBoard} from "./GameBoard.js"
 
 export {renderGameBoards, UIController}
 
@@ -38,21 +37,24 @@ function renderGameBoards() {
 
     const renderComputerShipPlacement = () => {
 
-        newGame.ComputerPlacementController();
-        newGame.ComputerPlayer.getGameBoard().gameGrid.forEach((row) => {
-            row.forEach((cell) => {
-                
+        opponentGrid.innerHTML = "";
+
+        newGame.ComputerPlacementController().forEach((row, rowIndex) => {
+            row.forEach((cell, cellIndex) => {
+
                 const cellButton = document.createElement("div");
                 cellButton.classList.add("cellButton");
-                
-                if (cell !== 0){
-                    
-                    cellButton.setAttribute("style", "background-color: red;");
+
+                cellButton.textContent = `${rowIndex}, ${cellIndex}`;
+
+                if (cell != 0){
+                    cellButton.setAttribute("style", "background-color: green;");
                 }
 
                 opponentGrid.appendChild(cellButton);
             })
-        })
+        });
+           
     }
 
     return {createHumanGridBoard, createComputerGridBoard, renderComputerShipPlacement}

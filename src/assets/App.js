@@ -23,13 +23,15 @@ function GameController(){
             const directions = ["horizontal", "vertical"]
             const randomDirectionIndex = Math.floor(Math.random() * directions.length);
             const randomDirection = directions[randomDirectionIndex];
-            const ComputerCoordinateX = Math.floor(Math.random() * 10);
-            const ComputerCoordinateY = Math.floor(Math.random() * 10);
-            console.log(ComputerGameBoard.placeShips(ship, randomDirection, ComputerCoordinateX, ComputerCoordinateY));
+            const ComputerCoordinateX = Math.floor(Math.random() * (10 - ship.length));
+            const ComputerCoordinateY = Math.floor(Math.random() * (10 - ship.length));
+            ComputerGameBoard.placeShips(ship, randomDirection, ComputerCoordinateX, ComputerCoordinateY);
             
-        })
+        });
+        return ComputerGameBoard.gameGrid;
 
-    }
+    };
+
 
     const HumanShipPlacementController = (ShipType, direction, coordinateX, coordinateY) => {
         HumanPlayer.getGameBoard().placeShips(ShipType, direction, coordinateX, coordinateY);

@@ -5,14 +5,10 @@ class GameBoard{
     constructor(){
         this.height = 10;
         this.width = 10;
-        this.gameGrid = [];
-        for(let height = 0; height < this.height; height++){
-            this.gameGrid[height] = [];
-            for(let width = 0; width < this.height; width++){
-                this.gameGrid[height].push(0);
-            }
-        }
+        this.gameGrid = Array(10).fill(null).map(() => [])
         this.shipArmy = [];
+        this.computerShipCoordinates = [];
+        this.humanShipCoordinates = [];
         this.missedCoordinates = [];
         this.hitCoordinates = [];
     }
@@ -22,19 +18,37 @@ class GameBoard{
 
         this.shipArmy.push(shipType);
 
-        if (direction === "horizontal"){
-            for (let i = 0; i < shipType.length; i++){
-                this.gameGrid[coordinateX][coordinateY + i] = shipType.key;
+        if(this.validShipPlacement(shipType, direction, coordinateX, coordinateY)){
+            if (direction === "horizontal"){
+                for (let i = 0; i < shipType.length; i++){
+                    this.gameGrid[coordinateX][coordinateY + i] === shipType.key;
+                }
+            } else if (direction === "vertical"){
+                for (let i = 0; i < shipType.length; i++){
+                    this.gameGrid[coordinateX + i][coordinateY] === shipType.key;
+                }
             }
-            
-            
-        } else if (direction === "vertical"){
-            for (let i = 0; i < shipType.length; i++){
-                this.gameGrid[coordinateX + i][coordinateY] = shipType.key;
-            }
-    
         }
         return this.gameGrid;
+    }
+
+    validShipPlacement(shipType, direction, coordinateX, coordinateY){
+
+        if (direction === "horizontal"){
+            for(let i = 0; i < shipType.length; i++){
+                if(this.gameGrid[coordinateX][coordinateY + i] !== null){
+                return false
+                }
+            } 
+        } else if (direction === "vertical"){
+            for (let i = 0; i <shipType.length; i++){
+                if (this.gameGrid[coordinateX + i][coordinateY] !== null){
+                    return false
+                }
+            }
+        }
+
+        return true
     }
 
     receiveAttack(coordinateX, coordinateY){
