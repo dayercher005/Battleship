@@ -14,20 +14,23 @@ function GameController(){
     const Submarine = new Ship(3, 0, 4);
     const PatrolBoat = new Ship(2, 0, 5);
 
-    const ShipArmy = [Carrier, BattleShip, Destroyer, Submarine, PatrolBoat];
 
     const ComputerPlacementController = () => {
 
+        const computerShipArmy = [Carrier, BattleShip, Destroyer, Submarine, PatrolBoat];
+
         const ComputerGameBoard =  ComputerPlayer.getGameBoard();
-        ShipArmy.forEach((ship) => {
-            const directions = ["horizontal", "vertical"]
-            const randomDirectionIndex = Math.floor(Math.random() * directions.length);
+        for (let index = 0; index < computerShipArmy.length; index++){
+            const directions = ["horizontal", "vertical"];
+            const randomDirectionIndex = Math.floor(Math.random() * computerShipArmy[index].length);
             const randomDirection = directions[randomDirectionIndex];
-            const ComputerCoordinateX = Math.floor(Math.random() * (10 - ship.length));
-            const ComputerCoordinateY = Math.floor(Math.random() * (10 - ship.length));
-            ComputerGameBoard.placeShips(ship, randomDirection, ComputerCoordinateX, ComputerCoordinateY);
-            
-        });
+            const ComputerCoordinateX = Math.floor(Math.random() * (10));
+            const ComputerCoordinateY = Math.floor(Math.random() * (10));
+            console.log(computerShipArmy);
+            if (ComputerGameBoard.placeShips(computerShipArmy[index], randomDirection, ComputerCoordinateX, ComputerCoordinateY) === false){
+                computerShipArmy.push(computerShipArmy[index]);
+            }
+        };
         return ComputerGameBoard.gameGrid;
 
     };

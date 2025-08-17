@@ -47,7 +47,7 @@ function renderGameBoards() {
 
                 cellButton.textContent = `${rowIndex}, ${cellIndex}`;
 
-                if (cell != 0){
+                if (cell !== null){
                     cellButton.setAttribute("style", "background-color: green;");
                 }
 
@@ -65,6 +65,7 @@ function renderGameBoards() {
 
 function UIController(){
 
+    
     renderGameBoards().createHumanGridBoard();
     renderGameBoards().createComputerGridBoard();
     renderGameBoards().renderComputerShipPlacement();
