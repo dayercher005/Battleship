@@ -22,18 +22,24 @@ function GameController(){
         const ComputerGameBoard =  ComputerPlayer.getGameBoard();
         for (let index = 0; index < computerShipArmy.length; index++){
             const directions = ["horizontal", "vertical"];
-            const randomDirectionIndex = Math.floor(Math.random() * computerShipArmy[index].length);
+            const randomDirectionIndex = Math.floor(Math.random() * directions.length);
             const randomDirection = directions[randomDirectionIndex];
             const ComputerCoordinateX = Math.floor(Math.random() * (10));
             const ComputerCoordinateY = Math.floor(Math.random() * (10));
-            console.log(computerShipArmy);
+
             if (ComputerGameBoard.placeShips(computerShipArmy[index], randomDirection, ComputerCoordinateX, ComputerCoordinateY) === false){
                 computerShipArmy.push(computerShipArmy[index]);
+            } else {
+                ComputerGameBoard.placeShips(computerShipArmy[index], randomDirection, ComputerCoordinateX, ComputerCoordinateY);
             }
+            
+            }
+            
+            return ComputerGameBoard.gameGrid;
+            
         };
-        return ComputerGameBoard.gameGrid;
-
-    };
+        
+    
 
 
     const HumanShipPlacementController = (ShipType, direction, coordinateX, coordinateY) => {

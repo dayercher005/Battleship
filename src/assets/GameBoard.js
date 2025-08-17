@@ -40,7 +40,7 @@ class GameBoard{
 
         if (direction === "horizontal"){
             for(let i = 0; i < shipType.length; i++){
-                if (coordinateY + i > 9){
+                if (coordinateY + i > 9 || coordinateY + i < 0){
                     return false;
                 } else if (this.gameGrid[coordinateX][coordinateY + i] !== null){
                     return false;
@@ -48,7 +48,7 @@ class GameBoard{
             } 
         } else if (direction === "vertical"){
             for (let i = 0; i < shipType.length; i++){
-                if (coordinateX + i > 9){
+                if (coordinateX + i > 9 || coordinateX + i < 0 ){
                     return false;
                 } else if (this.gameGrid[coordinateX + i][coordinateY] !== null){
                     return false;
