@@ -50,15 +50,15 @@ div[id="battleFields"]{
 div[id="buttonContainer"]{
     display: flex;
     justify-content: center;
-    margin: 1%;
+    margin: 3%;
     gap: 2%;
 }
 
 button[class="buttonStyles"]{
     font-family: var(--font-family);
     font-size: 1.1rem;
-    height: 30px;
-    width: 150px;
+    height: 45px;
+    width: 200px;
     color: var(--white-color);
     border: none;
     border-radius: 7px;
@@ -79,4 +79,22 @@ button[id="randomButton"]{
 
 button[id="randomButton"]:hover{
     background-color: hsl(24, 81%, 25%);
+}
+
+div[id="shipButtonContainer"]{
+    display: flex;
+    justify-content: center;
+    gap: 3%;
+}
+
+button[class="Ships"]{
+    font-family: Impact;
+    font-size:1.4rem;
+    border: none;
+    border-radius: 7px;
+    background-color: hsl(0, 0%, 100%);
+}
+
+button[class="Ships"]:hover{
+    background-color: hsl(0, 0%, 90%);
 }
