@@ -14,17 +14,6 @@
     <header>
         <h1 id="gameHeader">BattleShip Game</h1>
     </header>
-
-    <dialog>
-        <form>
-            <h2>Placement of BattleShips</h2>
-            <div>
-                <label>Carrier</label>
-                <input>
-                <label></label>
-            </div>
-        </form>
-    </dialog>
     
     <div id="mainContent">
 
@@ -33,12 +22,18 @@
                 <h3 class="subHeader">Your GameBoard: </h3>
                 <div id="ownGrid"></div>
             </div>
+
             <div>
                 <h3 class="subHeader">Opponent's GameBoard: </h3>
                 <div id="opponentGrid"></div>
             </div>
         </div>
 
+    </div>
+
+    <div id="buttonContainer">
+        <button class="buttonStyles" id="startButton">Start Game</button>
+        <button class="buttonStyles" id="randomButton">Randomize Ships</button>
     </div>
 
 </body>

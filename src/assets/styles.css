@@ -2,6 +2,7 @@
 
 :root{
     --font-family: Roboto;
+    --white-color: hsl(0, 0%, 100%);
 }
 
 *{
@@ -19,7 +20,7 @@ body{
 h1[id="gameHeader"]{
     font-family: var(--font-family);
     text-align: center;
-    padding: 2.5%;
+    padding: 1.5%;
 }
 
 h3[class="subHeader"]{
@@ -35,8 +36,8 @@ div[id="battleFields"]{
 
 #opponentGrid, #ownGrid{
     display: grid;
-    grid-template-columns: repeat(10, 50px);
-    grid-template-rows: repeat(10, 50px);
+    grid-template-columns: repeat(10, 45px);
+    grid-template-rows: repeat(10, 45px);
 }
 
 .cellButton{
@@ -44,4 +45,38 @@ div[id="battleFields"]{
     border: 2px solid black;
     height: 50px;
     width: 50px;
+}
+
+div[id="buttonContainer"]{
+    display: flex;
+    justify-content: center;
+    margin: 1%;
+    gap: 2%;
+}
+
+button[class="buttonStyles"]{
+    font-family: var(--font-family);
+    font-size: 1.1rem;
+    height: 30px;
+    width: 150px;
+    color: var(--white-color);
+    border: none;
+    border-radius: 7px;
+    align-self: center;
+}
+
+button[id="startButton"]{
+    background-color: hsl(124, 98%, 59%);
+}
+
+button[id="startButton"]:hover{
+    background-color: hsl(124, 98%, 45%);
+}
+
+button[id="randomButton"]{
+    background-color: hsl(24, 81%, 31%);
+}
+
+button[id="randomButton"]:hover{
+    background-color: hsl(24, 81%, 25%);
 }
