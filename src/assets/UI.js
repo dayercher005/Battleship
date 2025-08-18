@@ -39,7 +39,7 @@ function renderGameBoards() {
 
         opponentGrid.innerHTML = "";
 
-        newGame.ComputerPlacementController().forEach((row, rowIndex) => {
+        newGame.ComputerRandomPlacementController().forEach((row, rowIndex) => {
             row.forEach((cell, cellIndex) => {
 
                 const cellButton = document.createElement("div");
@@ -52,22 +52,51 @@ function renderGameBoards() {
                 }
 
                 opponentGrid.appendChild(cellButton);
-            })
+            });
         });
            
     }
 
-    return {createHumanGridBoard, createComputerGridBoard, renderComputerShipPlacement}
+    const randomHumanShipPlacement = () => {
+
+        ownGrid.innerHTML = "";
+
+        newGame.HumanRandomPlacementController().forEach((row, rowIndex) => {
+            row.forEach((cell, cellIndex) => {
+
+                const cellButton = document.createElement("div");
+                cellButton.classList.add("cellButton");
+
+                cellButton.textContent = `${rowIndex}, ${cellIndex}`;
+
+                if (cell !== null){
+                    cellButton.setAttribute("style", "background-color: red;");
+                }
+
+                ownGrid.appendChild(cellButton);
+            })
+        });
+    }
+
+    return {createHumanGridBoard, createComputerGridBoard, randomHumanShipPlacement ,renderComputerShipPlacement}
 
 }
 
 
 
 function UIController(){
-
     
+    const startGameButton = document.querySelector("#startButton");
+    const randomizeShipsButton = document.querySelector("#randomButton");
+
     renderGameBoards().createHumanGridBoard();
     renderGameBoards().createComputerGridBoard();
-    renderGameBoards().renderComputerShipPlacement();
 
+    randomizeShipsButton.addEventListener("click", () => {
+        renderGameBoards().randomHumanShipPlacement();
+    });
+
+    startGameButton.addEventListener("click", () =>{
+        renderGameBoards().renderComputerShipPlacement();
+    })
 }
