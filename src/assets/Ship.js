@@ -2,10 +2,9 @@ export {Ship};
 
 class Ship{
 
-    constructor(length, hit, key){
+    constructor(length){
         this.length = length;
-        this.hitNumber = hit;
-        this.key = key;
+        this.hitNumber = 0
         this.sunk = false;
     }
 

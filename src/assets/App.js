@@ -8,33 +8,33 @@ function GameController(){
     const HumanPlayer = new Player("Human");
     const ComputerPlayer = new Player("Computer");
 
-    const Carrier = new Ship(5, 0, 1);
-    const BattleShip = new Ship(4, 0, 2);
-    const Destroyer = new Ship(3, 0, 3);
-    const Submarine = new Ship(3, 0, 4);
-    const PatrolBoat = new Ship(2, 0, 5);
+    const Carrier = new Ship(5);
+    const BattleShip = new Ship(4);
+    const Destroyer = new Ship(3);
+    const Submarine = new Ship(3);
+    const PatrolBoat = new Ship(2);
 
     const HumanRandomPlacementController = () => {
 
         const ShipArmy = [Carrier, BattleShip, Destroyer, Submarine, PatrolBoat];
-
         const HumanGameBoard = HumanPlayer.getGameBoard();
+
         for (let index = 0; index < ShipArmy.length; index++){
             const directions = ["horizontal", "vertical"];
             const randomDirectionIndex = Math.floor(Math.random() * directions.length);
             const randomDirection = directions[randomDirectionIndex];
-            const HumanCoordinateX = Math.floor(Math.random() * (10));
-            const HumanCoordinateY = Math.floor(Math.random() * (10));
+            const HumanCoordinateX = Math.floor(Math.random() * 10);
+            const HumanCoordinateY = Math.floor(Math.random() * 10);
 
-            if (HumanGameBoard.placeShips(ShipArmy[index], randomDirection, HumanCoordinateX, HumanCoordinateY) === false){
+            if (!HumanGameBoard.placeShips(ShipArmy[index], randomDirection, HumanCoordinateX, HumanCoordinateY)){
                 ShipArmy.push(ShipArmy[index]);
             } else {
                 HumanGameBoard.placeShips(ShipArmy[index], randomDirection, HumanCoordinateX, HumanCoordinateY);
             }
             
-            }
+        }
             
-            return HumanGameBoard.gameGrid;
+        return HumanGameBoard.gameGrid;
     }
 
     const ComputerRandomPlacementController = () => {
@@ -46,8 +46,8 @@ function GameController(){
             const directions = ["horizontal", "vertical"];
             const randomDirectionIndex = Math.floor(Math.random() * directions.length);
             const randomDirection = directions[randomDirectionIndex];
-            const ComputerCoordinateX = Math.floor(Math.random() * (10));
-            const ComputerCoordinateY = Math.floor(Math.random() * (10));
+            const ComputerCoordinateX = Math.floor(Math.random() * 10);
+            const ComputerCoordinateY = Math.floor(Math.random() * 10);
 
             if (ComputerGameBoard.placeShips(ShipArmy[index], randomDirection, ComputerCoordinateX, ComputerCoordinateY) === false){
                 ShipArmy.push(ShipArmy[index]);
@@ -55,19 +55,41 @@ function GameController(){
                 ComputerGameBoard.placeShips(ShipArmy[index], randomDirection, ComputerCoordinateX, ComputerCoordinateY);
             }
             
-            }
+        }
             
-            return ComputerGameBoard.gameGrid;
+        return ComputerGameBoard.gameGrid;
             
-        };
+    };
         
     
 
 
     const HumanShipPlacementController = (ShipType, direction, coordinateX, coordinateY) => {
+
+        const directionButton = document.querySelector("#directionContainer");
+
         HumanPlayer.getGameBoard().placeShips(ShipType, direction, coordinateX, coordinateY);
+    };
+
+    const ReceiveAttackController = (coordinateX, coordinateY) => {
+
+        
+    };
+
+    const ComputerAttackController = () => {
+
+        const randomCoordinateX = Math.floor(Math.random() * 10);
+        const randomCoordinateY = Math.floor(Math.random() * 10);
+
+        const HumanGameBoard = HumanPlayer.getGameBoard();
+
+        if (!HumanGameBoard.receiveAttack(randomCoordinateX, randomCoordinateY)){
+            return ComputerAttackController();
+        } else{
+            return HumanGameBoard.receiveAttack(randomCoordinateX, randomCoordinateY);
+        }
     }
 
-    return {HumanPlayer, ComputerPlayer, HumanRandomPlacementController, ComputerRandomPlacementController, HumanShipPlacementController}
+    return {HumanPlayer, ComputerPlayer, HumanRandomPlacementController, ComputerRandomPlacementController, HumanShipPlacementController, ComputerAttackController}
 }
 

@@ -3,15 +3,9 @@ export {GameBoard};
 class GameBoard{
 
     constructor(){
-        this.height = 10;
-        this.width = 10;
         this.gameGrid = Array(10).fill(null).map(() => Array(10).fill(null));
         this.shipArmy = [];
-        this.computerShipCoordinates = [];
-        this.humanShipCoordinates = [];
-        this.missedCoordinates = [];
-        this.hitCoordinates = [];
-       
+        this.firedCoordinates = [];
     }
 
 
@@ -24,11 +18,13 @@ class GameBoard{
         
         if (direction === "horizontal"){
             for (let i = 0; i < shipType.length; i++){
-                this.gameGrid[coordinateX][coordinateY + i] = shipType.key;
+                this.gameGrid[coordinateX][coordinateY + i] = shipType;
+                this.shipArmy.push(shipType);
             }
         } else if (direction === "vertical"){
             for (let i = 0; i < shipType.length; i++){
-                this.gameGrid[coordinateX + i][coordinateY] = shipType.key;
+                this.gameGrid[coordinateX + i][coordinateY] = shipType;
+                this.shipArmy.push(shipType);
             }
         }
 
@@ -56,34 +52,48 @@ class GameBoard{
             }
         }
 
-        
         return true
     }
 
     receiveAttack(coordinateX, coordinateY){
-        if (this.gameGrid[coordinateX][coordinateY] !== 0){
-            this.hitCoordinates.push([coordinateX, coordinateY])
+
+        if (!this.coordinatesValidator(coordinateX, coordinateY)){
+            return false;
+        }
+
+        if (this.gameGrid[coordinateX][coordinateY] !== null){
+            
             this.shipArmy.forEach((ship) => {
-                if (this.gameGrid[coordinateX][coordinateY] === ship.key){
+                if (this.gameGrid[coordinateX][coordinateY] === ship){
+                    this.gameGrid[coordinateX][coordinateY] = "hitShip";
                     ship.hit();
                 }
             })
         } else {
-            this.missedCoordinates.push([coordinateX, coordinateY]);
+            this.gameGrid[coordinateX][coordinateY] = "None"
         }
 
-        this.gameGrid[coordinateX][coordinateY] = 0;
+        this.firedCoordinates.push([coordinateX, coordinateY])
+
+        return this.gameGrid;
     }
 
+    coordinatesValidator(coordinateX, coordinateY){
+        this.firedCoordinates.forEach((coordinatePair) => {
+            if ([coordinateX, coordinateY] == coordinatePair){
+                return false
+            }
+        })
+        
+        return true
+    }
 
     trackGameFlow(){
-        this.gameGrid.forEach((row) => {
-            row.forEach((column) => {
-                if (column !== 0 || column !== 7){
-                    return false;
-                }
-            })
-        })
+        this.shipArmy.forEach((ship) => {
+            if (ship.sunk === false){
+                return false
+            }
+        });
 
         return true;
     }

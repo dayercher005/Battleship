@@ -10,27 +10,25 @@ function renderGameBoards() {
     const opponentGrid = document.querySelector("#opponentGrid");
 
     const createHumanGridBoard = () => {
-        newGame.HumanPlayer.getGameBoard().gameGrid.forEach((row, rowIndex) => {
-            row.forEach((cell, cellIndex) => {
+        newGame.HumanPlayer.getGameBoard().gameGrid.forEach((row) => {
+            row.forEach(() => {
 
                 const cellButton = document.createElement("div");
                 cellButton.classList.add("cellButton");
                 
                 ownGrid.appendChild(cellButton);
-                cellButton.textContent = `${rowIndex}, ${cellIndex}`;
             })
         })
     };
 
     const createComputerGridBoard = () => {
 
-        newGame.ComputerPlayer.getGameBoard().gameGrid.forEach((row, rowIndex) => {
-            row.forEach((cell, cellIndex) => {
-            const cellButton = document.createElement("div");
-            cellButton.classList.add("cellButton");
-            
-            opponentGrid.appendChild(cellButton);
-            cellButton.textContent = `${rowIndex}, ${cellIndex}`;
+        newGame.ComputerPlayer.getGameBoard().gameGrid.forEach((row) => {
+            row.forEach(() => {
+                const cellButton = document.createElement("div");
+                cellButton.classList.add("cellButton");
+
+                opponentGrid.appendChild(cellButton);
             });    
         });
     };
@@ -39,17 +37,10 @@ function renderGameBoards() {
 
         opponentGrid.innerHTML = "";
 
-        newGame.ComputerRandomPlacementController().forEach((row, rowIndex) => {
-            row.forEach((cell, cellIndex) => {
-
+        newGame.ComputerRandomPlacementController().forEach((row) => {
+            row.forEach(() => {
                 const cellButton = document.createElement("div");
                 cellButton.classList.add("cellButton");
-
-                cellButton.textContent = `${rowIndex}, ${cellIndex}`;
-
-                if (cell !== null){
-                    cellButton.setAttribute("style", "background-color: green;");
-                }
 
                 opponentGrid.appendChild(cellButton);
             });
@@ -61,30 +52,57 @@ function renderGameBoards() {
 
         ownGrid.innerHTML = "";
 
-        newGame.HumanRandomPlacementController().forEach((row, rowIndex) => {
-            row.forEach((cell, cellIndex) => {
-
+        newGame.HumanRandomPlacementController().forEach((row) => {
+            row.forEach((cell) => {
                 const cellButton = document.createElement("div");
                 cellButton.classList.add("cellButton");
-
-                cellButton.textContent = `${rowIndex}, ${cellIndex}`;
 
                 if (cell !== null){
                     cellButton.setAttribute("style", "background-color: red;");
                 }
 
                 ownGrid.appendChild(cellButton);
+                
             })
         });
+        
+
+    };
+
+    const renderComputerAttack = () => {
+
+        ownGrid.innerHTML = "";
+        
+        newGame.ComputerAttackController().forEach((row) => {
+            row.forEach((cell) => {
+
+                const cellButton = document.createElement("div");
+                cellButton.classList.add("cellButton");
+
+                if(cell === "None"){
+                    cellButton.setAttribute("style", "background-color: yellow");
+                } else if (cell === "shipHit"){
+                    cellButton.setAttribute("style", "background-color: pink;");
+                } else if (!cell) {
+                    cellButton.setAttribute("style", "background-color: green;");
+                } else {
+                    cellButton.setAttribute("style", "background-color: red;");
+                }
+
+                ownGrid.appendChild(cellButton);
+
+            })
+        });
+        
     }
 
-    return {createHumanGridBoard, createComputerGridBoard, randomHumanShipPlacement ,renderComputerShipPlacement}
+    return {createHumanGridBoard, createComputerGridBoard, randomHumanShipPlacement ,renderComputerShipPlacement, renderComputerAttack}
 
 }
 
 
 
-function UIController(){
+function UIEventListeners(){
     
     const startGameButton = document.querySelector("#startButton");
     const randomizeShipsButton = document.querySelector("#randomButton");
@@ -98,5 +116,15 @@ function UIController(){
 
     startGameButton.addEventListener("click", () =>{
         renderGameBoards().renderComputerShipPlacement();
-    })
+        renderGameBoards().renderComputerAttack();
+    });
+
+    
+}
+
+
+
+function UIController(){
+
+    UIEventListeners();
 }
