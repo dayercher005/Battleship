@@ -8,6 +8,9 @@ function GameController(){
     const HumanPlayer = new Player("Human");
     const ComputerPlayer = new Player("Computer");
 
+    const ComputerGameBoard = ComputerPlayer.getGameBoard();
+    const HumanGameBoard = HumanPlayer.getGameBoard();
+
     const Carrier = new Ship(5);
     const BattleShip = new Ship(4);
     const Destroyer = new Ship(3);
@@ -17,7 +20,6 @@ function GameController(){
     const HumanRandomPlacementController = () => {
 
         const ShipArmy = [Carrier, BattleShip, Destroyer, Submarine, PatrolBoat];
-        const HumanGameBoard = HumanPlayer.getGameBoard();
 
         for (let index = 0; index < ShipArmy.length; index++){
             const directions = ["horizontal", "vertical"];
@@ -41,7 +43,6 @@ function GameController(){
 
         const ShipArmy = [Carrier, BattleShip, Destroyer, Submarine, PatrolBoat];
 
-        const ComputerGameBoard =  ComputerPlayer.getGameBoard();
         for (let index = 0; index < ShipArmy.length; index++){
             const directions = ["horizontal", "vertical"];
             const randomDirectionIndex = Math.floor(Math.random() * directions.length);
@@ -80,8 +81,6 @@ function GameController(){
 
         const randomCoordinateX = Math.floor(Math.random() * 10);
         const randomCoordinateY = Math.floor(Math.random() * 10);
-
-        const HumanGameBoard = HumanPlayer.getGameBoard();
 
         if (!HumanGameBoard.receiveAttack(randomCoordinateX, randomCoordinateY)){
             return ComputerAttackController();

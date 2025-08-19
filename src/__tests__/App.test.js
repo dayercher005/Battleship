@@ -10,6 +10,6 @@ test('HumanRandomPlacementController() should generate a random board filled wit
 
 test('ComputerAttackController() should generate a board filled both previous ships and computer attacks', () => {
     expect(newGame.ComputerAttackController()).toEqual(
-
+        
     )
 })

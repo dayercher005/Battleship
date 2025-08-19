@@ -79,14 +79,12 @@ function renderGameBoards() {
                 const cellButton = document.createElement("div");
                 cellButton.classList.add("cellButton");
 
-                if(cell === "None"){
-                    cellButton.setAttribute("style", "background-color: yellow");
-                } else if (cell === "shipHit"){
-                    cellButton.setAttribute("style", "background-color: pink;");
-                } else if (!cell) {
-                    cellButton.setAttribute("style", "background-color: green;");
-                } else {
-                    cellButton.setAttribute("style", "background-color: red;");
+                if (cell === "None") {
+                    cellButton.setAttribute("style", "background-color: blue");
+                } else if (cell === "hitShip") {
+                    cellButton.setAttribute("style", "background-color: red");
+                } else if (!cell){
+                    cellButton.setAttribute("style", "background-color: white");
                 }
 
                 ownGrid.appendChild(cellButton);
