@@ -66,11 +66,11 @@ button[class="buttonStyles"]{
 }
 
 button[id="startButton"]{
-    background-color: hsl(124, 98%, 59%);
+    background-color: hsl(124, 98%, 45%);
 }
 
 button[id="startButton"]:hover{
-    background-color: hsl(124, 98%, 45%);
+    background-color: hsl(124, 98%, 40%);
 }
 
 button[id="randomButton"]{
@@ -79,6 +79,14 @@ button[id="randomButton"]{
 
 button[id="randomButton"]:hover{
     background-color: hsl(24, 81%, 25%);
+}
+
+button[id="directionButton"]{
+    background-color: hsl(27, 85%, 50%);
+}
+
+button[id="directionButton"]:hover{
+    background-color: hsl(27, 85%, 45%);
 }
 
 div[id="shipButtonContainer"]{
@@ -100,4 +108,8 @@ button[class="Ships"]{
 
 button[class="Ships"]:hover{
     background-color: hsl(0, 0%, 90%);
+}
+
+div[class="cellButton"]:hover{
+background-color: hsl(0, 0%, 85%);
 }
