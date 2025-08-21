@@ -24,7 +24,7 @@ function UIEventListeners() {
                 cellButton.classList.add("cellButton");
                 cellButton.classList.add("humanCell");
                 cellButton.dataset.row = rowIndex;
-                cellButton.dataset.row = cellIndex;
+                cellButton.dataset.cell = cellIndex;
 
                 if (cell === "None") {
                     cellButton.textContent = "X";
@@ -47,7 +47,7 @@ function UIEventListeners() {
                 cellButton.classList.add("cellButton");
                 cellButton.classList.add("computerCell");
                 cellButton.dataset.row = rowIndex;
-                cellButton.dataset.row = cellIndex;
+                cellButton.dataset.cell = cellIndex;
 
                 if (cell === "None") {
                     cellButton.textContent = "X";
@@ -56,13 +56,12 @@ function UIEventListeners() {
                     cellButton.textContent = "X";
                 } else if (!cell){
                     cellButton.setAttribute("style", "background-color: white");
-                } else{
-                    cellButton.setAttribute("style", "background-color: red");
                 }
 
-                opponentGrid.appendChild(cellButton)
+                opponentGrid.appendChild(cellButton);
             })
         });
+        
     }
 
 
@@ -84,7 +83,18 @@ function UIEventListeners() {
         
     }
 
-    return {UpdateGrid, randomHumanShipPlacement ,renderComputerShipPlacement, renderComputerAttack}
+    const CellClicker = () => {
+        opponentGrid.addEventListener("click", (e) => {
+            const selectedRow = e.target.dataset.row;
+            const selectedCell = e.target.dataset.cell;
+
+            newGame.HumanAttackController(selectedRow, selectedCell);
+            renderComputerAttack();
+            UpdateGrid();
+        });
+    }
+
+    return {UpdateGrid, randomHumanShipPlacement ,renderComputerShipPlacement, renderComputerAttack, CellClicker}
 
 }
 
@@ -105,8 +115,10 @@ function UIInterface(){
     });
 
     startGameButton.addEventListener("click", () => {
-        BattleShipUI.renderComputerAttack();
+        BattleShipUI.renderComputerShipPlacement();
+        BattleShipUI.CellClicker();
         BattleShipUI.UpdateGrid();
+        
     })
     
 }
