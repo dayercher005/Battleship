@@ -45,6 +45,9 @@ div[id="battleFields"]{
     border: 2px solid black;
     height: 50px;
     width: 50px;
+    font-size: 3rem;
+    text-align: center;
+    align-items: center;
 }
 
 div[id="buttonContainer"]{
@@ -101,7 +104,7 @@ button[class="Ships"]{
     border: none;
     border-radius: 7px;
     background-color: hsl(0, 0%, 100%);
-    height: 80px;
+    height: 70px;
     width: 10vw;
     max-width: 200px;
 }
@@ -110,6 +113,6 @@ button[class="Ships"]:hover{
     background-color: hsl(0, 0%, 90%);
 }
 
-div[class="cellButton"]:hover{
-background-color: hsl(0, 0%, 85%);
+button[class="cellButton computerCell"]:hover{
+    background-color: hsl(0, 0%, 85%);
 }
