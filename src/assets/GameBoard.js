@@ -97,4 +97,8 @@ class GameBoard{
 
         return true;
     }
+
+    resetBoard(){
+        this.gameGrid = Array(10).fill(null).map(() => Array(10).fill(null));
+    }
 }

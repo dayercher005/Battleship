@@ -17,7 +17,16 @@ function GameController(){
     const Submarine = new Ship(3);
     const PatrolBoat = new Ship(2);
 
+    const ComputerBoardCreation = () => {
+        return ComputerGameBoard.gameGrid;
+    }
+
+    const HumanBoardCreation = () => {
+        return HumanGameBoard.gameGrid;
+    }
+
     const HumanRandomPlacementController = () => {
+        HumanGameBoard.resetBoard();
 
         const ShipArmy = [Carrier, BattleShip, Destroyer, Submarine, PatrolBoat];
 
@@ -50,7 +59,7 @@ function GameController(){
             const ComputerCoordinateX = Math.floor(Math.random() * 10);
             const ComputerCoordinateY = Math.floor(Math.random() * 10);
 
-            if (ComputerGameBoard.placeShips(ShipArmy[index], randomDirection, ComputerCoordinateX, ComputerCoordinateY) === false){
+            if (!ComputerGameBoard.placeShips(ShipArmy[index], randomDirection, ComputerCoordinateX, ComputerCoordinateY)){
                 ShipArmy.push(ShipArmy[index]);
             } else {
                 ComputerGameBoard.placeShips(ShipArmy[index], randomDirection, ComputerCoordinateX, ComputerCoordinateY);
@@ -89,6 +98,6 @@ function GameController(){
         }
     }
 
-    return {HumanPlayer, ComputerPlayer, HumanRandomPlacementController, ComputerRandomPlacementController, HumanShipPlacementController, ComputerAttackController}
+    return {HumanGameBoard, ComputerGameBoard, ComputerBoardCreation, HumanBoardCreation, HumanRandomPlacementController, ComputerRandomPlacementController, HumanShipPlacementController, ComputerAttackController}
 }
 

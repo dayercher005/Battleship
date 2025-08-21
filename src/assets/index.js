@@ -1,4 +1,4 @@
-import {renderGameBoards, UIController} from "./UI.js";
+import {UIInterface} from "./UI.js";
 import "./styles.css";
 
-UIController();
+UIInterface();
