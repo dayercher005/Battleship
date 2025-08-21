@@ -1,128 +1,112 @@
 import {GameController} from "./App.js";
 
-export {renderGameBoards, UIController}
+export {UIInterface, UIEventListeners}
 
-function renderGameBoards() {
+function UIEventListeners() {
 
     const newGame = GameController();
 
     const ownGrid = document.querySelector("#ownGrid");
     const opponentGrid = document.querySelector("#opponentGrid");
 
-    const createHumanGridBoard = () => {
-        newGame.HumanPlayer.getGameBoard().gameGrid.forEach((row) => {
-            row.forEach(() => {
+    const UpdateGrid = () => {
+        ownGrid.innerHTML = "";
+        opponentGrid.innerHTML = "";
 
-                const cellButton = document.createElement("div");
+        const HumanBoard = newGame.HumanBoardCreation();
+        const ComputerBoard = newGame.ComputerBoardCreation();
+        console.log(HumanBoard);
+
+
+        HumanBoard.forEach((row, rowIndex) => {
+            row.forEach((cell, cellIndex) => {
+                const cellButton = document.createElement("button");
                 cellButton.classList.add("cellButton");
-                
-                ownGrid.appendChild(cellButton);
+                cellButton.classList.add("humanCell");
+                cellButton.dataset.row = rowIndex;
+                cellButton.dataset.row = cellIndex;
+
+                if (cell === "None") {
+                    cellButton.textContent = "X";
+                } else if (cell === "hitShip") {
+                    cellButton.setAttribute("style", "background-color: pink");
+                    cellButton.textContent = "X";
+                } else if (!cell){
+                    cellButton.setAttribute("style", "background-color: white;");
+                } else{
+                    cellButton.setAttribute("style", "background-color: red");
+                }
+
+                ownGrid.appendChild(cellButton)
             })
-        })
-    };
-
-    const createComputerGridBoard = () => {
-
-        newGame.ComputerPlayer.getGameBoard().gameGrid.forEach((row) => {
-            row.forEach(() => {
-                const cellButton = document.createElement("div");
-                cellButton.classList.add("cellButton");
-
-                opponentGrid.appendChild(cellButton);
-            });    
         });
-    };
+
+        ComputerBoard.forEach((row, rowIndex) => {
+            row.forEach((cell, cellIndex) => {
+                const cellButton = document.createElement("button");
+                cellButton.classList.add("cellButton");
+                cellButton.classList.add("computerCell");
+                cellButton.dataset.row = rowIndex;
+                cellButton.dataset.row = cellIndex;
+
+                if (cell === "None") {
+                    cellButton.textContent = "X";
+                } else if (cell === "hitShip") {
+                    cellButton.setAttribute("style", "background-color: pink");
+                    cellButton.textContent = "X";
+                } else if (!cell){
+                    cellButton.setAttribute("style", "background-color: white");
+                } else{
+                    cellButton.setAttribute("style", "background-color: red");
+                }
+
+                opponentGrid.appendChild(cellButton)
+            })
+        });
+    }
+
 
     const renderComputerShipPlacement = () => {
 
-        opponentGrid.innerHTML = "";
-
-        newGame.ComputerRandomPlacementController().forEach((row) => {
-            row.forEach(() => {
-                const cellButton = document.createElement("div");
-                cellButton.classList.add("cellButton");
-
-                opponentGrid.appendChild(cellButton);
-            });
-        });
+        newGame.ComputerRandomPlacementController();
            
     }
 
     const randomHumanShipPlacement = () => {
 
-        ownGrid.innerHTML = "";
-
-        newGame.HumanRandomPlacementController().forEach((row) => {
-            row.forEach((cell) => {
-                const cellButton = document.createElement("div");
-                cellButton.classList.add("cellButton");
-
-                if (cell !== null){
-                    cellButton.setAttribute("style", "background-color: red;");
-                }
-
-                ownGrid.appendChild(cellButton);
-                
-            })
-        });
+        newGame.HumanRandomPlacementController();
         
-
     };
 
     const renderComputerAttack = () => {
-
-        ownGrid.innerHTML = "";
         
-        newGame.ComputerAttackController().forEach((row) => {
-            row.forEach((cell) => {
-
-                const cellButton = document.createElement("div");
-                cellButton.classList.add("cellButton");
-
-                if (cell === "None") {
-                    cellButton.setAttribute("style", "background-color: blue");
-                } else if (cell === "hitShip") {
-                    cellButton.setAttribute("style", "background-color: red");
-                } else if (!cell){
-                    cellButton.setAttribute("style", "background-color: white");
-                }
-
-                ownGrid.appendChild(cellButton);
-
-            })
-        });
+        newGame.ComputerAttackController();
         
     }
 
-    return {createHumanGridBoard, createComputerGridBoard, randomHumanShipPlacement ,renderComputerShipPlacement, renderComputerAttack}
+    return {UpdateGrid, randomHumanShipPlacement ,renderComputerShipPlacement, renderComputerAttack}
 
 }
 
 
 
-function UIEventListeners(){
-    
+function UIInterface(){
+
     const startGameButton = document.querySelector("#startButton");
     const randomizeShipsButton = document.querySelector("#randomButton");
 
-    renderGameBoards().createHumanGridBoard();
-    renderGameBoards().createComputerGridBoard();
+    const BattleShipUI = UIEventListeners();
+
+    BattleShipUI.UpdateGrid();
 
     randomizeShipsButton.addEventListener("click", () => {
-        renderGameBoards().randomHumanShipPlacement();
+        BattleShipUI.randomHumanShipPlacement();
+        BattleShipUI.UpdateGrid();
     });
 
-    startGameButton.addEventListener("click", () =>{
-        renderGameBoards().renderComputerShipPlacement();
-        renderGameBoards().renderComputerAttack();
-    });
-
+    startGameButton.addEventListener("click", () => {
+        BattleShipUI.renderComputerAttack();
+        BattleShipUI.UpdateGrid();
+    })
     
-}
-
-
-
-function UIController(){
-
-    UIEventListeners();
 }
