@@ -98,6 +98,23 @@ function GameController(){
         }
     }
 
-    return {HumanGameBoard, ComputerGameBoard, ComputerBoardCreation, HumanBoardCreation, HumanRandomPlacementController, ComputerRandomPlacementController, HumanShipPlacementController, ComputerAttackController}
+    const HumanAttackController = (coordinateX, coordinateY) => {
+        if (!ComputerGameBoard.receiveAttack(coordinateX, coordinateY)){
+            return HumanAttackController();
+        } else{
+            return ComputerGameBoard.receiveAttack(coordinateX, coordinateY);
+        };
+        
+    }
+
+    return {
+        HumanGameBoard, 
+        ComputerGameBoard, 
+        ComputerBoardCreation, 
+        HumanBoardCreation, 
+        HumanRandomPlacementController, 
+        ComputerRandomPlacementController, 
+        HumanShipPlacementController, ComputerAttackController, 
+        HumanAttackController}
 }
 
