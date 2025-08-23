@@ -15,14 +15,11 @@ function UIEventListeners() {
 
         const HumanBoard = newGame.HumanBoardCreation();
         const ComputerBoard = newGame.ComputerBoardCreation();
-        console.log(HumanBoard);
-
 
         HumanBoard.forEach((row, rowIndex) => {
             row.forEach((cell, cellIndex) => {
                 const cellButton = document.createElement("button");
-                cellButton.classList.add("cellButton");
-                cellButton.classList.add("humanCell");
+                cellButton.classList.add("humanCellButton");
                 cellButton.dataset.row = rowIndex;
                 cellButton.dataset.cell = cellIndex;
 
@@ -41,47 +38,47 @@ function UIEventListeners() {
             })
         });
 
+        
         ComputerBoard.forEach((row, rowIndex) => {
             row.forEach((cell, cellIndex) => {
                 const cellButton = document.createElement("button");
-                cellButton.classList.add("cellButton");
-                cellButton.classList.add("computerCell");
+                cellButton.classList.add("computerCellButton");
                 cellButton.dataset.row = rowIndex;
                 cellButton.dataset.cell = cellIndex;
 
                 if (cell === "None") {
                     cellButton.textContent = "X";
-                } else if (cell === "hitShip") {
-                    cellButton.setAttribute("style", "background-color: pink");
-                    cellButton.textContent = "X";
                 } else if (!cell){
-                    cellButton.setAttribute("style", "background-color: white");
+                    cellButton.setAttribute("style", "background-color: white;")
+                } else if (cell === "hitShip"){
+                    cellButton.setAttribute("style", "background-color: pink;")
+                    cellButton.textContent = "X";
+                } else{
+                    cellButton.setAttribute("style", "background-color: white;");
                 }
+                
+
+                cellButton.addEventListener("mouseenter", () => {
+                    cellButton.setAttribute("styles", "background:hsl(0, 0%, 85%);")
+                })
 
                 opponentGrid.appendChild(cellButton);
-            })
-        });
-        
-    }
+                })
+            });
+        }
 
 
     const renderComputerShipPlacement = () => {
-
         newGame.ComputerRandomPlacementController();
-           
     }
 
     const randomHumanShipPlacement = () => {
-
         newGame.HumanRandomPlacementController();
-        
     };
 
     const renderComputerAttack = () => {
-        
         newGame.ComputerAttackController();
-        
-    }
+    };
 
     const CellClicker = () => {
         opponentGrid.addEventListener("click", (e) => {
@@ -91,10 +88,25 @@ function UIEventListeners() {
             newGame.HumanAttackController(selectedRow, selectedCell);
             renderComputerAttack();
             UpdateGrid();
+            UIRestartController();
         });
+    };
+
+    const UIRestartController = () => {
+        const restartText = document.querySelector("#gameEndText");
+        const restartScreen = document.querySelector("#endDialog");
+
+        if(newGame.GameRestartController() === true){
+            restartScreen.showModal();
+            restartText.textContent = "You've won!";
+        } else if (newGame.GameRestartController() === false){
+            restartScreen.showModal();
+            restartText.textContent = "Computer has won..."
+        }
+
     }
 
-    return {UpdateGrid, randomHumanShipPlacement ,renderComputerShipPlacement, renderComputerAttack, CellClicker}
+    return {UpdateGrid, randomHumanShipPlacement ,renderComputerShipPlacement, renderComputerAttack, CellClicker, UIRestartController}
 
 }
 
@@ -104,21 +116,28 @@ function UIInterface(){
 
     const startGameButton = document.querySelector("#startButton");
     const randomizeShipsButton = document.querySelector("#randomButton");
+    const restartButton = document.querySelector("#restartButton");
+    const restartScreen = document.querySelector("#endDialog");
 
     const BattleShipUI = UIEventListeners();
 
-    BattleShipUI.UpdateGrid();
+    BattleShipUI.UpdateGrid()
 
     randomizeShipsButton.addEventListener("click", () => {
         BattleShipUI.randomHumanShipPlacement();
         BattleShipUI.UpdateGrid();
     });
 
+
     startGameButton.addEventListener("click", () => {
         BattleShipUI.renderComputerShipPlacement();
         BattleShipUI.CellClicker();
         BattleShipUI.UpdateGrid();
-        
-    })
+    });
+
+    restartButton.addEventListener("click", () => {
+            restartScreen.close();
+            UIInterface();
+        })
     
 }

@@ -19,13 +19,13 @@ class GameBoard{
         if (direction === "horizontal"){
             for (let i = 0; i < shipType.length; i++){
                 this.gameGrid[coordinateX][coordinateY + i] = shipType;
-                this.shipArmy.push(shipType);
             }
+            this.shipArmy.push(shipType);
         } else if (direction === "vertical"){
             for (let i = 0; i < shipType.length; i++){
                 this.gameGrid[coordinateX + i][coordinateY] = shipType;
-                this.shipArmy.push(shipType);
             }
+            this.shipArmy.push(shipType);
         }
 
         return this.gameGrid;
@@ -65,8 +65,9 @@ class GameBoard{
             
             this.shipArmy.forEach((ship) => {
                 if (this.gameGrid[coordinateX][coordinateY] === ship){
-                    this.gameGrid[coordinateX][coordinateY] = "hitShip";
                     ship.hit();
+                    ship.isSunk();
+                    this.gameGrid[coordinateX][coordinateY] = "hitShip";
                 }
             })
         } else {
@@ -88,14 +89,15 @@ class GameBoard{
         return true
     }
 
-    trackGameFlow(){
-        this.shipArmy.forEach((ship) => {
-            if (ship.sunk === false){
-                return false
+    gameEnd(){
+        
+        for (let index = 0; index < this.shipArmy.length; index++){
+            if (this.shipArmy[index].sunk === false){
+                return true;
             }
-        });
+        }
 
-        return true;
+        return false
     }
 
     resetBoard(){

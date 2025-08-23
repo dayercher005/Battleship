@@ -1,5 +1,6 @@
 import {Ship} from "./Ship.js"
 import {Player} from "./Player.js"
+import {GameBoard} from "./GameBoard.js"
 
 export {GameController}
 
@@ -16,6 +17,8 @@ function GameController(){
     const Destroyer = new Ship(3);
     const Submarine = new Ship(3);
     const PatrolBoat = new Ship(2);
+
+    const originalShipArmy = [Carrier, BattleShip, Destroyer, Submarine, PatrolBoat];
 
     const ComputerBoardCreation = () => {
         return ComputerGameBoard.gameGrid;
@@ -41,10 +44,8 @@ function GameController(){
                 ShipArmy.push(ShipArmy[index]);
             } else {
                 HumanGameBoard.placeShips(ShipArmy[index], randomDirection, HumanCoordinateX, HumanCoordinateY);
-            }
-            
+            }    
         }
-            
         return HumanGameBoard.gameGrid;
     }
 
@@ -76,15 +77,11 @@ function GameController(){
 
     const HumanShipPlacementController = (ShipType, direction, coordinateX, coordinateY) => {
 
-        const directionButton = document.querySelector("#directionContainer");
+        HumanGameBoard.placeShips(ShipType, direction, coordinateX, coordinateY);
 
-        HumanPlayer.getGameBoard().placeShips(ShipType, direction, coordinateX, coordinateY);
+        return HumanGameBoard.gameGrid;
     };
 
-    const ReceiveAttackController = (coordinateX, coordinateY) => {
-
-        
-    };
 
     const ComputerAttackController = () => {
 
@@ -107,14 +104,40 @@ function GameController(){
         
     }
 
+    const GameRestartController = () => {
+        const HumanCheckWin = HumanGameBoard.gameEnd();
+        const ComputerCheckWin = ComputerGameBoard.gameEnd();
+        console.log(HumanCheckWin);
+
+        if (!HumanCheckWin){
+            HumanGameBoard.resetBoard();
+            ComputerGameBoard.resetBoard();
+            return true;
+        } else if (!ComputerCheckWin){
+            HumanGameBoard.resetBoard();
+            ComputerGameBoard.resetBoard();
+            return false;
+        }
+
+        return "No restart";
+    }
+
     return {
+        Carrier, 
+        BattleShip,
+        Destroyer,
+        Submarine,
+        PatrolBoat,
+        originalShipArmy, 
         HumanGameBoard, 
         ComputerGameBoard, 
         ComputerBoardCreation, 
         HumanBoardCreation, 
         HumanRandomPlacementController, 
         ComputerRandomPlacementController, 
-        HumanShipPlacementController, ComputerAttackController, 
-        HumanAttackController}
-}
-
+        HumanShipPlacementController, 
+        ComputerAttackController, 
+        HumanAttackController,
+        GameRestartController
+    };
+};
