@@ -18,12 +18,12 @@
     <div id="mainContent">
 
         <div id="battleFields">
-            <div>
+            <div id="HumanBoardContainer">
                 <h3 class="subHeader">Your GameBoard: </h3>
                 <div id="ownGrid"></div>
             </div>
 
-            <div>
+            <div id="ComputerBoardContainer">
                 <h3 class="subHeader">Opponent's GameBoard: </h3>
                 <div id="opponentGrid"></div>
             </div>
@@ -44,6 +44,11 @@
         <button class="Ships" id="Submarine">Submarine<br>Size: 3</button>
         <button class="Ships" id="PatrolBoat">Patrol Boat<br>Size: 2</button>
     </div>
+
+    <dialog id="endDialog">
+        <div id="gameEndText"></div>
+        <button class="buttonStyles" id="restartButton"></button>
+    </dialog>
 
 </body>
 </html>
