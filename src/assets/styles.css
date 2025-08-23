@@ -40,7 +40,7 @@ div[id="battleFields"]{
     grid-template-rows: repeat(10, 50px);
 }
 
-.cellButton{
+button[class="computerCellButton"], button[class="humanCellButton"]{
     background: hsl(0, 0%, 100%);
     border: 2px solid black;
     height: 50px;
@@ -49,6 +49,7 @@ div[id="battleFields"]{
     text-align: center;
     align-items: center;
 }
+
 
 div[id="buttonContainer"]{
     display: flex;
@@ -68,12 +69,18 @@ button[class="buttonStyles"]{
     align-self: center;
 }
 
+button[class="buttonStyles"]:hover, button[class="Ships"]:hover{
+    transform: translateY(-5px);
+    transition: 0.3s transform;
+}
+
 button[id="startButton"]{
     background-color: hsl(124, 98%, 45%);
 }
 
 button[id="startButton"]:hover{
     background-color: hsl(124, 98%, 40%);
+    box-shadow: 5px 5px 0.5em hsl(124, 33%, 43%);
 }
 
 button[id="randomButton"]{
@@ -82,6 +89,7 @@ button[id="randomButton"]{
 
 button[id="randomButton"]:hover{
     background-color: hsl(24, 81%, 25%);
+    box-shadow: 5px 5px 0.5em hsl(29, 60%, 34%);
 }
 
 button[id="directionButton"]{
@@ -90,6 +98,7 @@ button[id="directionButton"]{
 
 button[id="directionButton"]:hover{
     background-color: hsl(27, 85%, 45%);
+    box-shadow: 5px 5px 0.5em hsl(40, 53%, 50%);
 }
 
 div[id="shipButtonContainer"]{
@@ -111,8 +120,6 @@ button[class="Ships"]{
 
 button[class="Ships"]:hover{
     background-color: hsl(0, 0%, 90%);
+    box-shadow: 5px 5px 0.5em hsl(120, 1%, 31%);
 }
 
-button[class="cellButton computerCell"]:hover{
-    background-color: hsl(0, 0%, 85%);
-}
