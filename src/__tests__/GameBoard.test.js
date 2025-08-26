@@ -63,7 +63,7 @@ test("receiveAttack() method should evaluate the current GameBoard status and re
 
 
 test("gameEnd() method should return false if all ships have sunk and true if all ships have not sunk.", () => {
-    expect(newGameBoard.gameEnd()).toEqual(true);
+    expect(newGameBoard.gameEnd()).toEqual(false);
 
     expect(newGameBoard.receiveAttack(3, 6)).toEqual(
         [["None", null, null, null, null, null, null, null, null, null], 
@@ -80,5 +80,5 @@ test("gameEnd() method should return false if all ships have sunk and true if al
 
     expect(newGameBoard.shipArmy).toEqual([{"hitNumber": 3, "length": 3, "sunk": true}]);
 
-    expect(newGameBoard.gameEnd()).toEqual(false);
+    expect(newGameBoard.gameEnd()).toEqual(true);
 });
