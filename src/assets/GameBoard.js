@@ -57,19 +57,18 @@ class GameBoard{
 
     receiveAttack(coordinateX, coordinateY){
 
-        if (!this.coordinatesValidator(coordinateX, coordinateY)){
-            return false;
+        while(!this.coordinatesValidator(coordinateX, coordinateY)){
+            this.coordinatesValidator(coordinateX, coordinateY);
         }
 
-        if (this.gameGrid[coordinateX][coordinateY] !== null){
-            
-            this.shipArmy.forEach((ship) => {
-                if (this.gameGrid[coordinateX][coordinateY] === ship){
-                    ship.hit();
-                    ship.isSunk();
+        if (this.gameGrid[coordinateX][coordinateY]){
+            for(let index = 0; index < this.shipArmy.length; index++ ){
+                if (this.gameGrid[coordinateX][coordinateY] === this.shipArmy[index]){
                     this.gameGrid[coordinateX][coordinateY] = "hitShip";
+                    this.shipArmy[index].hit();
+                    this.shipArmy[index].isSunk();
                 }
-            })
+            }
         } else {
             this.gameGrid[coordinateX][coordinateY] = "None"
         }
@@ -80,24 +79,22 @@ class GameBoard{
     }
 
     coordinatesValidator(coordinateX, coordinateY){
-        this.firedCoordinates.forEach((coordinatePair) => {
-            if ([coordinateX, coordinateY] == coordinatePair){
-                return false
+        for (let index = 0; index < this.firedCoordinates.length; index++){
+            if ([coordinateX, coordinateY] == this.firedCoordinates[index]){
+                return false     
             }
-        })
+        }
         
         return true
     }
 
-    gameEnd(){
-        
+    gameEnd(){  
         for (let index = 0; index < this.shipArmy.length; index++){
-            if (this.shipArmy[index].sunk === false){
-                return true;
+            if (!this.shipArmy[index].sunk){
+                return false;
             }
         }
-
-        return false
+        return true
     }
 
     resetBoard(){

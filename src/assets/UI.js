@@ -65,6 +65,7 @@ function UIEventListeners() {
                 opponentGrid.appendChild(cellButton);
                 })
             });
+
         }
 
 
@@ -87,8 +88,8 @@ function UIEventListeners() {
 
             newGame.HumanAttackController(selectedRow, selectedCell);
             renderComputerAttack();
-            UpdateGrid();
             UIRestartController();
+            UpdateGrid();
         });
     };
 
@@ -98,15 +99,15 @@ function UIEventListeners() {
 
         if(newGame.GameRestartController() === true){
             restartScreen.showModal();
-            restartText.textContent = "You've won!";
-        } else if (newGame.GameRestartController() === false){
+            restartText.textContent = "Congratulations, you've won!";
+        } else if (newGame.GameRestartController() === true){
             restartScreen.showModal();
-            restartText.textContent = "Computer has won..."
+            restartText.textContent = "Sorry, the computer has won..."
         }
 
     }
 
-    return {UpdateGrid, randomHumanShipPlacement ,renderComputerShipPlacement, renderComputerAttack, CellClicker, UIRestartController}
+    return {UpdateGrid, randomHumanShipPlacement, renderComputerShipPlacement, renderComputerAttack, CellClicker, UIRestartController}
 
 }
 

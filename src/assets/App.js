@@ -1,6 +1,5 @@
 import {Ship} from "./Ship.js"
 import {Player} from "./Player.js"
-import {GameBoard} from "./GameBoard.js"
 
 export {GameController}
 
@@ -88,36 +87,33 @@ function GameController(){
         const randomCoordinateX = Math.floor(Math.random() * 10);
         const randomCoordinateY = Math.floor(Math.random() * 10);
 
-        if (!HumanGameBoard.receiveAttack(randomCoordinateX, randomCoordinateY)){
-            return ComputerAttackController();
-        } else{
-            return HumanGameBoard.receiveAttack(randomCoordinateX, randomCoordinateY);
-        }
+        HumanGameBoard.receiveAttack(randomCoordinateX, randomCoordinateY);
+
+        return HumanGameBoard.gameGrid;
     }
 
     const HumanAttackController = (coordinateX, coordinateY) => {
-        if (!ComputerGameBoard.receiveAttack(coordinateX, coordinateY)){
-            return HumanAttackController();
-        } else{
-            return ComputerGameBoard.receiveAttack(coordinateX, coordinateY);
-        };
+
+        ComputerGameBoard.receiveAttack(coordinateX, coordinateY);
+
+        return ComputerGameBoard.gameGrid;
         
     }
 
     const GameRestartController = () => {
-        const HumanCheckWin = HumanGameBoard.gameEnd();
-        const ComputerCheckWin = ComputerGameBoard.gameEnd();
-        console.log(HumanCheckWin);
+        const HumanGameEnd = HumanGameBoard.gameEnd();
+        const ComputerGameEnd = ComputerGameBoard.gameEnd();
 
-        if (!HumanCheckWin){
+        if (HumanGameEnd){
             HumanGameBoard.resetBoard();
             ComputerGameBoard.resetBoard();
             return true;
-        } else if (!ComputerCheckWin){
+        } else if (ComputerGameEnd){
             HumanGameBoard.resetBoard();
             ComputerGameBoard.resetBoard();
             return false;
         }
+        console.log(HumanGameBoard.shipArmy, ComputerGameBoard.shipArmy);
 
         return "No restart";
     }
@@ -128,7 +124,7 @@ function GameController(){
         Destroyer,
         Submarine,
         PatrolBoat,
-        originalShipArmy, 
+        originalShipArmy,
         HumanGameBoard, 
         ComputerGameBoard, 
         ComputerBoardCreation, 
