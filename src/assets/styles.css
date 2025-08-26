@@ -123,3 +123,34 @@ button[class="Ships"]:hover{
     box-shadow: 5px 5px 0.5em hsl(120, 1%, 31%);
 }
 
+dialog[id="#endDialog"]{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 35%;
+    border-radius: 10px;
+    border: none;
+    width: 40vw;
+    max-width: 600px;
+    height: 20vh;
+    max-height: 300px;
+}
+
+div[id="gameEndText"]{
+    font-family: Roboto;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 7%;
+    text-align: center;
+}
+
+button[id="restartButton"]{
+    background-color: hsl(287, 83%, 51%);
+    display: block;
+    margin: 0 auto;
+}
+
+button[id="restartButton"]:hover{
+    background-color: hsl(287, 83%, 45%);
+    box-shadow: 5px 5px 0.5em hsl(289, 86%, 61%);
+}
