@@ -123,7 +123,7 @@ button[class="Ships"]:hover{
     box-shadow: 5px 5px 0.5em hsl(120, 1%, 31%);
 }
 
-dialog[id="#endDialog"]{
+dialog{
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
