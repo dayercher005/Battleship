@@ -63,7 +63,7 @@ test("HumanAttackController() should attack the given coordinate, return None if
 
 });
 
-test("", () => {
+test("Verify the final shipArmy property of both Game Boards.", () => {
     expect(newGame.HumanGameBoard.shipArmy).toEqual(
         [{"hitNumber": 0, "length": 2, "sunk": false}]
     );
