@@ -1,10 +1,18 @@
+import {Ship} from "./Ship.js"
+
 export {GameBoard};
 
 class GameBoard{
 
     constructor(){
         this.gameGrid = Array(10).fill(null).map(() => Array(10).fill(null));
-        this.shipArmy = [];
+        this.shipArmy = [
+            new Ship(5),
+            new Ship(4),
+            new Ship(3),
+            new Ship(3),
+            new Ship(2)
+        ];
         this.firedCoordinates = [];
     }
 
@@ -20,12 +28,10 @@ class GameBoard{
             for (let i = 0; i < shipType.length; i++){
                 this.gameGrid[coordinateX][coordinateY + i] = shipType;
             }
-            this.shipArmy.push(shipType);
         } else if (direction === "vertical"){
             for (let i = 0; i < shipType.length; i++){
                 this.gameGrid[coordinateX + i][coordinateY] = shipType;
             }
-            this.shipArmy.push(shipType);
         }
 
         return this.gameGrid;
@@ -57,23 +63,23 @@ class GameBoard{
 
     receiveAttack(coordinateX, coordinateY){
 
-        while(!this.coordinatesValidator(coordinateX, coordinateY)){
-            this.coordinatesValidator(coordinateX, coordinateY);
+        if(!this.coordinatesValidator(coordinateX, coordinateY)){
+            return false;
         }
 
         if (this.gameGrid[coordinateX][coordinateY]){
             for(let index = 0; index < this.shipArmy.length; index++ ){
                 if (this.gameGrid[coordinateX][coordinateY] === this.shipArmy[index]){
+                    this.gameGrid[coordinateX][coordinateY].hit();
+                    this.gameGrid[coordinateX][coordinateY].isSunk();
                     this.gameGrid[coordinateX][coordinateY] = "hitShip";
-                    this.shipArmy[index].hit();
-                    this.shipArmy[index].isSunk();
                 }
             }
         } else {
             this.gameGrid[coordinateX][coordinateY] = "None"
         }
 
-        this.firedCoordinates.push([coordinateX, coordinateY])
+        this.firedCoordinates.push([coordinateX, coordinateY]);
 
         return this.gameGrid;
     }
@@ -99,5 +105,13 @@ class GameBoard{
 
     resetBoard(){
         this.gameGrid = Array(10).fill(null).map(() => Array(10).fill(null));
+    }
+
+    resetShipsStatus(){
+        this.shipArmy.forEach((ship) => {
+            ship.sunk = false;
+            ship.hitNumber = 0;
+        });
+        this.firedCoordinates = [];
     }
 }

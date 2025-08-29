@@ -11,13 +11,6 @@ function GameController(){
     const ComputerGameBoard = ComputerPlayer.getGameBoard();
     const HumanGameBoard = HumanPlayer.getGameBoard();
 
-    const Carrier = new Ship(5);
-    const BattleShip = new Ship(4);
-    const Destroyer = new Ship(3);
-    const Submarine = new Ship(3);
-    const PatrolBoat = new Ship(2);
-
-    const originalShipArmy = [Carrier, BattleShip, Destroyer, Submarine, PatrolBoat];
 
     const ComputerBoardCreation = () => {
         return ComputerGameBoard.gameGrid;
@@ -30,27 +23,34 @@ function GameController(){
     const HumanRandomPlacementController = () => {
         HumanGameBoard.resetBoard();
 
-        const ShipArmy = [Carrier, BattleShip, Destroyer, Submarine, PatrolBoat];
-
-        for (let index = 0; index < ShipArmy.length; index++){
+        for(let index = 0; index < HumanGameBoard.shipArmy.length; index++){
             const directions = ["horizontal", "vertical"];
             const randomDirectionIndex = Math.floor(Math.random() * directions.length);
             const randomDirection = directions[randomDirectionIndex];
             const HumanCoordinateX = Math.floor(Math.random() * 10);
             const HumanCoordinateY = Math.floor(Math.random() * 10);
-
-            if (!HumanGameBoard.placeShips(ShipArmy[index], randomDirection, HumanCoordinateX, HumanCoordinateY)){
-                ShipArmy.push(ShipArmy[index]);
-            } else {
-                HumanGameBoard.placeShips(ShipArmy[index], randomDirection, HumanCoordinateX, HumanCoordinateY);
-            }    
+            HumanRecursiveShipPlacement(HumanGameBoard.shipArmy[index], randomDirection, HumanCoordinateX, HumanCoordinateY);
         }
+
         return HumanGameBoard.gameGrid;
     }
 
+    const HumanRecursiveShipPlacement = (Ship, direction, coordinateX, coordinateY) => {
+
+        if(!HumanGameBoard.placeShips(Ship, direction, coordinateX, coordinateY)){
+            const newCoordinateX = Math.floor(Math.random() * 10);
+            const newCoordinateY = Math.floor(Math.random() * 10);
+
+            HumanRecursiveShipPlacement(Ship, direction, newCoordinateX, newCoordinateY);
+        } else{
+            HumanGameBoard.placeShips(Ship, direction, coordinateX, coordinateY);
+        }
+        
+    };
+
     const ComputerRandomPlacementController = () => {
 
-        const ShipArmy = [Carrier, BattleShip, Destroyer, Submarine, PatrolBoat];
+        const ShipArmy = ComputerGameBoard.shipArmy;
 
         for (let index = 0; index < ShipArmy.length; index++){
             const directions = ["horizontal", "vertical"];
@@ -72,10 +72,22 @@ function GameController(){
     };
         
     
+    const ComputerRecursiveShipPlacement = (Ship, direction, coordinateX, coordinateY) => {
+
+        if(!ComputerGameBoard.placeShips(Ship, direction, coordinateX, coordinateY)){
+            const newCoordinateX = Math.floor(Math.random() * 10);
+            const newCoordinateY = Math.floor(Math.random() * 10);
+
+            ComputerRecursiveShipPlacement(Ship, direction, newCoordinateX, newCoordinateY);
+        } else{
+            ComputerGameBoard.placeShips(Ship, direction, coordinateX, coordinateY);
+        }
+        
+    };
 
 
     const HumanShipPlacementController = (ShipType, direction, coordinateX, coordinateY) => {
-
+        
         HumanGameBoard.placeShips(ShipType, direction, coordinateX, coordinateY);
 
         return HumanGameBoard.gameGrid;
@@ -87,46 +99,54 @@ function GameController(){
         const randomCoordinateX = Math.floor(Math.random() * 10);
         const randomCoordinateY = Math.floor(Math.random() * 10);
 
-        HumanGameBoard.receiveAttack(randomCoordinateX, randomCoordinateY);
-
+        while(!HumanGameBoard.receiveAttack(randomCoordinateX, randomCoordinateY)){
+            ComputerAttackController();
+        }
+        console.log(HumanGameBoard.gameGrid);
         return HumanGameBoard.gameGrid;
     }
 
     const HumanAttackController = (coordinateX, coordinateY) => {
 
         ComputerGameBoard.receiveAttack(coordinateX, coordinateY);
-
-        return ComputerGameBoard.gameGrid;
         
+        console.log(ComputerGameBoard.gameGrid, HumanGameBoard.gameGrid);
+        console.log(ComputerGameBoard.shipArmy, HumanGameBoard.shipArmy);
+        return ComputerGameBoard.gameGrid;
     }
 
+
+    const CellStatusController = () => {
+
+    }
+
+
     const GameRestartController = () => {
+
         const HumanGameEnd = HumanGameBoard.gameEnd();
         const ComputerGameEnd = ComputerGameBoard.gameEnd();
-
+        
         if (HumanGameEnd){
             HumanGameBoard.resetBoard();
+            HumanGameBoard.resetShipsStatus();
             ComputerGameBoard.resetBoard();
+            ComputerGameBoard.resetShipsStatus();
             return true;
+
         } else if (ComputerGameEnd){
             HumanGameBoard.resetBoard();
+            HumanGameBoard.resetShipsStatus();
             ComputerGameBoard.resetBoard();
+            ComputerGameBoard.resetShipsStatus();
             return false;
         }
-        console.log(HumanGameBoard.shipArmy, ComputerGameBoard.shipArmy);
 
         return "No restart";
     }
 
     return {
-        Carrier, 
-        BattleShip,
-        Destroyer,
-        Submarine,
-        PatrolBoat,
-        originalShipArmy,
-        HumanGameBoard, 
-        ComputerGameBoard, 
+        HumanGameBoard,
+        ComputerGameBoard,
         ComputerBoardCreation, 
         HumanBoardCreation, 
         HumanRandomPlacementController, 

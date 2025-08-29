@@ -9,8 +9,7 @@ class Player{
     }
 
     getGameBoard(){
-        const ownGameBoard = new GameBoard();
-        return ownGameBoard;
+        return new GameBoard;
     }
 
 }

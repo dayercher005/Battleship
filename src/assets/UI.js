@@ -81,12 +81,16 @@ function UIEventListeners() {
         newGame.ComputerAttackController();
     };
 
+    const renderHumanAttack = (coordinateX, coordinateY) => {
+        newGame.HumanAttackController(coordinateX, coordinateY);
+    }
+
     const CellClicker = () => {
         opponentGrid.addEventListener("click", (e) => {
             const selectedRow = e.target.dataset.row;
             const selectedCell = e.target.dataset.cell;
 
-            newGame.HumanAttackController(selectedRow, selectedCell);
+            renderHumanAttack(selectedRow, selectedCell);
             renderComputerAttack();
             UIRestartController();
             UpdateGrid();
@@ -122,7 +126,7 @@ function UIInterface(){
 
     const BattleShipUI = UIEventListeners();
 
-    BattleShipUI.UpdateGrid()
+    BattleShipUI.UpdateGrid();
 
     randomizeShipsButton.addEventListener("click", () => {
         BattleShipUI.randomHumanShipPlacement();
@@ -137,8 +141,8 @@ function UIInterface(){
     });
 
     restartButton.addEventListener("click", () => {
-            restartScreen.close();
-            UIInterface();
-        })
+        restartScreen.close();
+        UIInterface();
+    })
     
 }
