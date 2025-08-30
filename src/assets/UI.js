@@ -77,6 +77,103 @@ function UIEventListeners() {
         newGame.HumanRandomPlacementController();
     };
 
+    const manualHumanShipPlacement = () => {
+
+        const carrierShip = document.querySelector("#Carrier");
+        const battleShip = document.querySelector("#BattleShip");
+        const destroyerShip = document.querySelector("#Destroyer");
+        const submarineShip = document.querySelector("#Submarine");
+        const patrolBoat = document.querySelector("#PatrolBoat");
+
+        const changeDirection = document.querySelector("#directionButton");
+        let defaultDirection = "horizontal"
+
+        carrierShip.addEventListener("click", () => {
+            changeDirection.addEventListener("click", () => {
+                defaultDirection === "horizontal" ? "vertical" : "horizontal"; 
+            });
+
+            ownGrid.addEventListener("click", (e) => {
+                const selectedRow = +e.target.dataset.row;
+                const selectedCell = +e.target.dataset.cell;
+
+                console.log(typeof(selectedCell), typeof(selectedRow));
+                newGame.HumanShipPlacementController(newGame.HumanGameBoard.shipArmy[0], defaultDirection, selectedRow, selectedCell);
+                
+                carrierShip.disabled = true;
+                UpdateGrid();
+            })
+        })
+
+        battleShip.addEventListener("click", () => {
+            changeDirection.addEventListener("click", () => {
+                defaultDirection === "horizontal" ? "vertical" : "horizontal"; 
+            });
+
+            ownGrid.addEventListener("click", (e) => {
+                const selectedRow = +e.target.dataset.row;
+                const selectedCell = +e.target.dataset.cell
+
+                newGame.HumanShipPlacementController(newGame.HumanGameBoard.shipArmy[1], defaultDirection, selectedRow, selectedCell);
+
+                battleShip.disabled = true;
+                UpdateGrid();
+            })
+        })
+
+        destroyerShip.addEventListener("click", () => {
+            changeDirection.addEventListener("click", () => {
+                defaultDirection === "horizontal" ? "vertical" : "horizontal"; 
+            });
+
+            ownGrid.addEventListener("click", (e) => {
+                const selectedRow = +e.target.dataset.row
+                const selectedCell = +e.target.dataset.cell
+
+                newGame.HumanShipPlacementController(newGame.HumanGameBoard.shipArmy[2], defaultDirection, selectedRow, selectedCell);
+
+                destroyerShip.disabled = true;
+                UpdateGrid();
+            });
+
+            
+        })
+
+        submarineShip.addEventListener("click", () => {
+            changeDirection.addEventListener("click", () => {
+                defaultDirection === "horizontal" ? "vertical" : "horizontal"; 
+            });
+
+            ownGrid.addEventListener("click", (e) => {
+                const selectedRow = +e.target.dataset.row
+                const selectedCell = +e.target.dataset.cell
+
+                newGame.HumanShipPlacementController(newGame.HumanGameBoard.shipArmy[3], defaultDirection, selectedRow, selectedCell);
+
+                submarineShip.disabled = true;
+                UpdateGrid();
+            })
+
+        })
+
+        patrolBoat.addEventListener("click", () => {
+
+            changeDirection.addEventListener("click", () => {
+                defaultDirection === "horizontal" ? "vertical" : "horizontal"; 
+            });
+
+            ownGrid.addEventListener("click", (e) => {
+                const selectedRow = +e.target.dataset.row
+                const selectedCell = +e.target.dataset.cell
+
+                newGame.HumanShipPlacementController(newGame.ComputerGameBoard.shipArmy[4], defaultDirection, selectedRow, selectedCell);
+
+                patrolBoat.disabled = true;
+                UpdateGrid();
+            })
+        })
+    }
+
     const renderComputerAttack = () => {
         newGame.ComputerAttackController();
     };
@@ -104,14 +201,25 @@ function UIEventListeners() {
         if(newGame.GameRestartController() === true){
             restartScreen.showModal();
             restartText.textContent = "Congratulations, you've won!";
-        } else if (newGame.GameRestartController() === true){
+        } else if (newGame.GameRestartController() === false){
             restartScreen.showModal();
             restartText.textContent = "Sorry, the computer has won..."
         }
 
     }
 
-    return {UpdateGrid, randomHumanShipPlacement, renderComputerShipPlacement, renderComputerAttack, CellClicker, UIRestartController}
+    const UIResetter = () => {
+        return newGame.VariablesResetController();
+    }
+
+    return {UpdateGrid, 
+            randomHumanShipPlacement, 
+            manualHumanShipPlacement,
+            renderComputerShipPlacement, 
+            renderComputerAttack, 
+            CellClicker, 
+            UIRestartController, 
+            UIResetter}
 
 }
 
@@ -124,25 +232,40 @@ function UIInterface(){
     const restartButton = document.querySelector("#restartButton");
     const restartScreen = document.querySelector("#endDialog");
 
+    const carrierShip = document.querySelector("#Carrier");
+    const battleShip = document.querySelector("#BattleShip");
+    const destroyerShip = document.querySelector("#Destroyer");
+    const submarineShip = document.querySelector("#Submarine");
+    const patrolBoat = document.querySelector("#PatrolBoat");
+
     const BattleShipUI = UIEventListeners();
 
     BattleShipUI.UpdateGrid();
+    BattleShipUI.manualHumanShipPlacement();
 
     randomizeShipsButton.addEventListener("click", () => {
         BattleShipUI.randomHumanShipPlacement();
         BattleShipUI.UpdateGrid();
     });
 
-
     startGameButton.addEventListener("click", () => {
         BattleShipUI.renderComputerShipPlacement();
         BattleShipUI.CellClicker();
         BattleShipUI.UpdateGrid();
+        randomizeShipsButton.disabled = true;
+        startGameButton.disabled = true;
     });
 
     restartButton.addEventListener("click", () => {
         restartScreen.close();
-        UIInterface();
+        BattleShipUI.UIResetter();
+        BattleShipUI.UpdateGrid();
+        randomizeShipsButton.disabled = false;
+        carrierShip.disabled = false;
+        battleShip.disabled = false;
+        destroyerShip.disabled = false;
+        submarineShip.disabled = false;
+        patrolBoat.disabled = false;
     })
     
 }

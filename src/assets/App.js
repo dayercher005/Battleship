@@ -49,22 +49,15 @@ function GameController(){
     };
 
     const ComputerRandomPlacementController = () => {
+        ComputerGameBoard.resetBoard();
 
-        const ShipArmy = ComputerGameBoard.shipArmy;
-
-        for (let index = 0; index < ShipArmy.length; index++){
+        for (let index = 0; index < ComputerGameBoard.shipArmy.length; index++){
             const directions = ["horizontal", "vertical"];
             const randomDirectionIndex = Math.floor(Math.random() * directions.length);
             const randomDirection = directions[randomDirectionIndex];
             const ComputerCoordinateX = Math.floor(Math.random() * 10);
             const ComputerCoordinateY = Math.floor(Math.random() * 10);
-
-            if (!ComputerGameBoard.placeShips(ShipArmy[index], randomDirection, ComputerCoordinateX, ComputerCoordinateY)){
-                ShipArmy.push(ShipArmy[index]);
-            } else {
-                ComputerGameBoard.placeShips(ShipArmy[index], randomDirection, ComputerCoordinateX, ComputerCoordinateY);
-            }
-            
+            ComputerRecursiveShipPlacement(ComputerGameBoard.shipArmy[index], randomDirection, ComputerCoordinateX, ComputerCoordinateY);
         }
             
         return ComputerGameBoard.gameGrid;
@@ -86,10 +79,12 @@ function GameController(){
     };
 
 
-    const HumanShipPlacementController = (ShipType, direction, coordinateX, coordinateY) => {
-        
-        HumanGameBoard.placeShips(ShipType, direction, coordinateX, coordinateY);
 
+
+    const HumanShipPlacementController = (ShipType, direction, coordinateX, coordinateY) => {
+
+        HumanGameBoard.placeShips(ShipType, direction, coordinateX, coordinateY);
+        console.log(HumanGameBoard.gameGrid);
         return HumanGameBoard.gameGrid;
     };
 
@@ -98,26 +93,26 @@ function GameController(){
 
         const randomCoordinateX = Math.floor(Math.random() * 10);
         const randomCoordinateY = Math.floor(Math.random() * 10);
+        ComputerAttackValidator(randomCoordinateX, randomCoordinateY);
+        
+    }
 
-        while(!HumanGameBoard.receiveAttack(randomCoordinateX, randomCoordinateY)){
-            ComputerAttackController();
+    const ComputerAttackValidator = (coordinateX, coordinateY) => {
+
+        if (!HumanGameBoard.receiveAttack(coordinateX, coordinateY)){
+            const randomCoordinateX = Math.floor(Math.random() * 10);
+            const randomCoordinateY = Math.floor(Math.random() * 10);
+            ComputerAttackValidator(randomCoordinateX, randomCoordinateY);
+
+        } else {
+            HumanGameBoard.receiveAttack(coordinateX, coordinateY)
         }
-        console.log(HumanGameBoard.gameGrid);
-        return HumanGameBoard.gameGrid;
     }
 
     const HumanAttackController = (coordinateX, coordinateY) => {
 
         ComputerGameBoard.receiveAttack(coordinateX, coordinateY);
-        
-        console.log(ComputerGameBoard.gameGrid, HumanGameBoard.gameGrid);
-        console.log(ComputerGameBoard.shipArmy, HumanGameBoard.shipArmy);
         return ComputerGameBoard.gameGrid;
-    }
-
-
-    const CellStatusController = () => {
-
     }
 
 
@@ -125,23 +120,22 @@ function GameController(){
 
         const HumanGameEnd = HumanGameBoard.gameEnd();
         const ComputerGameEnd = ComputerGameBoard.gameEnd();
-        
-        if (HumanGameEnd){
-            HumanGameBoard.resetBoard();
-            HumanGameBoard.resetShipsStatus();
-            ComputerGameBoard.resetBoard();
-            ComputerGameBoard.resetShipsStatus();
-            return true;
-
-        } else if (ComputerGameEnd){
-            HumanGameBoard.resetBoard();
-            HumanGameBoard.resetShipsStatus();
-            ComputerGameBoard.resetBoard();
-            ComputerGameBoard.resetShipsStatus();
+        console.log(HumanGameEnd, ComputerGameEnd);
+        if (HumanGameEnd === true){
             return false;
+
+        } else if (ComputerGameEnd === true){ 
+            return true;
         }
 
         return "No restart";
+    }
+
+    const VariablesResetController = () => {
+        HumanGameBoard.resetBoard();
+        HumanGameBoard.resetShipsStatus();
+        ComputerGameBoard.resetBoard();
+        ComputerGameBoard.resetShipsStatus();
     }
 
     return {
@@ -154,6 +148,7 @@ function GameController(){
         HumanShipPlacementController, 
         ComputerAttackController, 
         HumanAttackController,
-        GameRestartController
+        GameRestartController,
+        VariablesResetController
     };
 };

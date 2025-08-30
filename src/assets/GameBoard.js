@@ -86,7 +86,7 @@ class GameBoard{
 
     coordinatesValidator(coordinateX, coordinateY){
         for (let index = 0; index < this.firedCoordinates.length; index++){
-            if ([coordinateX, coordinateY] == this.firedCoordinates[index]){
+            if (coordinateX === this.firedCoordinates[index][0] && coordinateY === this.firedCoordinates[index][1]){
                 return false     
             }
         }
