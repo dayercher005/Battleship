@@ -1,11 +1,9 @@
 const {GameBoard} = require('../assets/GameBoard.js');
-const {Ship} = require('../assets/Ship.js');
 
 const newGameBoard = new GameBoard();
-const newShip = new Ship(3);
 
 test("placeShips() method should place the specified ship in the correct coordinates in the correct orientation.", () => {
-    expect(newGameBoard.placeShips(newShip, "horizontal", 3, 4)).toEqual(
+    expect(newGameBoard.placeShips(newGameBoard.shipArmy[2], "horizontal", 3, 4)).toEqual(
         [[null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
@@ -22,15 +20,15 @@ test("placeShips() method should place the specified ship in the correct coordin
 test("receiveAttack() method should evaluate the current GameBoard status and reflect the new hit coordinates.", () => {
     expect(newGameBoard.receiveAttack(3, 4)).toEqual(
         [[null, null, null, null, null, null, null, null, null, null], 
-        [null, null, null, null, null, null, null, null, null, null], 
-        [null, null, null, null, null, null, null, null, null, null], 
-        [null, null, null, null, "hitShip", {"hitNumber": 1, "length": 3, "sunk": false}, {"hitNumber": 1, "length": 3, "sunk": false}, null, null, null], 
-        [null, null, null, null, null, null, null, null, null, null], 
-        [null, null, null, null, null, null, null, null, null, null], 
-        [null, null, null, null, null, null, null, null, null, null], 
-        [null, null, null, null, null, null, null, null, null, null], 
-        [null, null, null, null, null, null, null, null, null, null], 
-        [null, null, null, null, null, null, null, null, null, null]]
+         [null, null, null, null, null, null, null, null, null, null], 
+         [null, null, null, null, null, null, null, null, null, null], 
+         [null, null, null, null, "hitShip", {"hitNumber": 1, "length": 3, "sunk": false}, {"hitNumber": 1, "length": 3, "sunk": false}, null, null, null], 
+         [null, null, null, null, null, null, null, null, null, null], 
+         [null, null, null, null, null, null, null, null, null, null], 
+         [null, null, null, null, null, null, null, null, null, null], 
+         [null, null, null, null, null, null, null, null, null, null], 
+         [null, null, null, null, null, null, null, null, null, null], 
+         [null, null, null, null, null, null, null, null, null, null]]
     );
 
     expect(newGameBoard.receiveAttack(0, 0)).toEqual(
@@ -78,7 +76,13 @@ test("gameEnd() method should return false if all ships have sunk and true if al
          [null, null, null, null, null, null, null, null, null, null]]
     );
 
-    expect(newGameBoard.shipArmy).toEqual([{"hitNumber": 3, "length": 3, "sunk": true}]);
+    expect(newGameBoard.shipArmy).toEqual(
+        [{"hitNumber": 0, "length": 5, "sunk": false}, 
+         {"hitNumber": 0, "length": 4, "sunk": false}, 
+         {"hitNumber": 3, "length": 3, "sunk": true}, 
+         {"hitNumber": 0, "length": 3, "sunk": false}, 
+         {"hitNumber": 0, "length": 2, "sunk": false}]
+    ) ;
 
-    expect(newGameBoard.gameEnd()).toEqual(true);
+    expect(newGameBoard.gameEnd()).toEqual(false);
 });
