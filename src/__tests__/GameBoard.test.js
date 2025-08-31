@@ -7,7 +7,7 @@ test("placeShips() method should place the specified ship in the correct coordin
         [[null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
-         [null, null, null, null, {"hitNumber": 0, "length": 3, "sunk": false}, {"hitNumber": 0, "length": 3, "sunk": false}, {"hitNumber": 0, "length": 3, "sunk": false}, null, null, null], 
+         [null, null, null, null, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Destroyer"}, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Destroyer"}, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Destroyer"}, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
@@ -22,7 +22,7 @@ test("receiveAttack() method should evaluate the current GameBoard status and re
         [[null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
-         [null, null, null, null, "hitShip", {"hitNumber": 1, "length": 3, "sunk": false}, {"hitNumber": 1, "length": 3, "sunk": false}, null, null, null], 
+         [null, null, null, null, "hitShip", {"hitNumber": 1, "length": 3, "sunk": false, "name": "Destroyer"}, {"hitNumber": 1, "length": 3, "sunk": false, "name": "Destroyer"}, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
@@ -35,7 +35,7 @@ test("receiveAttack() method should evaluate the current GameBoard status and re
         [["None", null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
-         [null, null, null, null, "hitShip", {"hitNumber": 1, "length": 3, "sunk": false}, {"hitNumber": 1, "length": 3, "sunk": false}, null, null, null], 
+         [null, null, null, null, "hitShip", {"hitNumber": 1, "length": 3, "sunk": false, "name": "Destroyer"}, {"hitNumber": 1, "length": 3, "sunk": false, "name": "Destroyer"}, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
@@ -49,7 +49,7 @@ test("receiveAttack() method should evaluate the current GameBoard status and re
         [["None", null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
-         [null, null, null, null, "hitShip", "hitShip", {"hitNumber": 2, "length": 3, "sunk": false}, null, null, null], 
+         [null, null, null, null, "hitShip", "hitShip", {"hitNumber": 2, "length": 3, "sunk": false, "name": "Destroyer"}, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
@@ -77,11 +77,11 @@ test("gameEnd() method should return false if all ships have sunk and true if al
     );
 
     expect(newGameBoard.shipArmy).toEqual(
-        [{"hitNumber": 0, "length": 5, "sunk": false}, 
-         {"hitNumber": 0, "length": 4, "sunk": false}, 
-         {"hitNumber": 3, "length": 3, "sunk": true}, 
-         {"hitNumber": 0, "length": 3, "sunk": false}, 
-         {"hitNumber": 0, "length": 2, "sunk": false}]
+        [{"hitNumber": 0, "length": 5, "sunk": false, "name": "Carrier"}, 
+         {"hitNumber": 0, "length": 4, "sunk": false, "name": "BattleShip"}, 
+         {"hitNumber": 3, "length": 3, "sunk": true, "name": "Destroyer"}, 
+         {"hitNumber": 0, "length": 3, "sunk": false, "name": "Submarine"}, 
+         {"hitNumber": 0, "length": 2, "sunk": false, "name": "PatrolBoat"}]
     ) ;
 
     expect(newGameBoard.gameEnd()).toEqual(false);

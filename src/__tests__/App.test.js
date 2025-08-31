@@ -1,7 +1,7 @@
 const {Ship} = require('../assets/Ship.js');
 const {GameController} = require('../assets/App.js');
 
-const Voyager = new Ship(3);
+const Voyager = new Ship(3, "Voyager");
 const newGame = GameController();
 
 test('ComputerBoardCreation() should generate a 10 x 10 grid.', () => {
@@ -37,9 +37,9 @@ test('HumanBoardCreation() should generate a 10 x 10 grid.', () => {
 test("HumanShipPlacementController() should place the given ship into their respective coordinate provided its valid", () => {
     expect(newGame.HumanShipPlacementController(Voyager, "vertical", 1, 1)).toEqual(
         [[null, null, null, null, null, null, null, null, null, null], 
-         [null, {"hitNumber": 0, "length": 3, "sunk": false}, null, null, null, null, null, null, null, null], 
-         [null, {"hitNumber": 0, "length": 3, "sunk": false}, null, null, null, null, null, null, null, null], 
-         [null, {"hitNumber": 0, "length": 3, "sunk": false}, null, null, null, null, null, null, null, null], 
+         [null, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, null, null, null, null, null, null, null, null], 
+         [null, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, null, null, null, null, null, null, null, null], 
+         [null, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
@@ -56,7 +56,7 @@ test("ComputerGameBoard should reflect new game Grid upon manually adding new Sh
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
-         [null, null, null, {"hitNumber": 0, "length": 3, "sunk": false}, {"hitNumber": 0, "length": 3, "sunk": false}, {"hitNumber": 0, "length": 3, "sunk": false}, null, null, null, null], 
+         [null, null, null, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
@@ -71,7 +71,7 @@ test("HumanAttackController() should attack the given coordinate, return None if
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
-         [null, null, null, {"hitNumber": 0, "length": 3, "sunk": false}, {"hitNumber": 0, "length": 3, "sunk": false}, {"hitNumber": 0, "length": 3, "sunk": false}, null, null, null, null], 
+         [null, null, null, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
@@ -83,27 +83,27 @@ test("HumanAttackController() should attack the given coordinate, return None if
 
 test("Verify the final shipArmy property of both Game Boards.", () => {
     expect(newGame.HumanGameBoard.shipArmy).toEqual(
-        [{"hitNumber": 0, "length": 5, "sunk": false}, 
-         {"hitNumber": 0, "length": 4, "sunk": false}, 
-         {"hitNumber": 0, "length": 3, "sunk": false}, 
-         {"hitNumber": 0, "length": 3, "sunk": false},             
-         {"hitNumber": 0, "length": 2, "sunk": false}]
+        [{"hitNumber": 0, "length": 5, "sunk": false, "name": "Carrier"}, 
+         {"hitNumber": 0, "length": 4, "sunk": false, "name": "BattleShip"}, 
+         {"hitNumber": 0, "length": 3, "sunk": false, "name": "Destroyer"}, 
+         {"hitNumber": 0, "length": 3, "sunk": false, "name": "Submarine"},             
+         {"hitNumber": 0, "length": 2, "sunk": false, "name": "PatrolBoat"}]
     );
     expect(newGame.ComputerGameBoard.shipArmy).toEqual(
-        [{"hitNumber": 0, "length": 5, "sunk": false}, 
-         {"hitNumber": 0, "length": 4, "sunk": false}, 
-         {"hitNumber": 0, "length": 3, "sunk": false}, 
-         {"hitNumber": 0, "length": 3, "sunk": false},
-         {"hitNumber": 0, "length": 2, "sunk": false}]
+        [{"hitNumber": 0, "length": 5, "sunk": false, "name": "Carrier"}, 
+         {"hitNumber": 0, "length": 4, "sunk": false, "name": "BattleShip"}, 
+         {"hitNumber": 0, "length": 3, "sunk": false, "name": "Destroyer"}, 
+         {"hitNumber": 0, "length": 3, "sunk": false, "name": "Submarine"},
+         {"hitNumber": 0, "length": 2, "sunk": false, "name": "PatrolBoat"}]
     );
 })
 
 test("Check the final end state of both boards.", () => {
     expect(newGame.HumanGameBoard.gameGrid).toEqual(
       [[null, null, null, null, null, null, null, null, null, null], 
-       [null, {"hitNumber": 0, "length": 3, "sunk": false}, null, null, null, null, null, null, null, null], 
-       [null, {"hitNumber": 0, "length": 3, "sunk": false}, null, null, null, null, null, null, null, null], 
-       [null, {"hitNumber": 0, "length": 3, "sunk": false}, null, null, null, null, null, null, null, null], 
+       [null, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, null, null, null, null, null, null, null, null], 
+       [null, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, null, null, null, null, null, null, null, null], 
+       [null, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, null, null, null, null, null, null, null, null], 
        [null, null, null, null, null, null, null, null, null, null], 
        [null, null, null, null, null, null, null, null, null, null], 
        [null, null, null, null, null, null, null, null, null, null], 
@@ -117,7 +117,7 @@ test("Check the final end state of both boards.", () => {
        [null, null, null, null, null, null, null, null, null, null], 
        [null, null, null, null, null, null, null, null, null, null], 
        [null, null, null, null, null, null, null, null, null, null], 
-       [null, null, null, {"hitNumber": 0, "length": 3, "sunk": false}, {"hitNumber": 0, "length": 3, "sunk": false}, {"hitNumber": 0, "length": 3, "sunk": false}, null, null, null, null], 
+       [null, null, null, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, null, null, null, null], 
        [null, null, null, null, null, null, null, null, null, null], 
        [null, null, null, null, null, null, null, null, null, null], 
        [null, null, null, null, null, null, null, null, null, null], 
