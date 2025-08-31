@@ -50,6 +50,7 @@ function GameController(){
         
     };
 
+    // Initial Function to generate Computer's initial Ship Placement coordinates, directions and Ship Type.
     const ComputerRandomPlacementController = () => {
         ComputerGameBoard.resetBoard();
 
@@ -66,7 +67,7 @@ function GameController(){
             
     };
         
-    
+    // Recursive Function to place Computer's Ships
     const ComputerRecursiveShipPlacement = (Ship, direction, coordinateX, coordinateY) => {
 
         if(!ComputerGameBoard.placeShips(Ship, direction, coordinateX, coordinateY)){
@@ -81,36 +82,18 @@ function GameController(){
     };
 
 
-
-
+    // Function to Validate Ship Placement of Human 
     const HumanShipPlacementController = (ShipType, direction, coordinateX, coordinateY) => {
 
         if(!HumanGameBoard.placeShips(ShipType, direction, coordinateX, coordinateY)){
-            return false
+            return false;
         }
         
         return HumanGameBoard.gameGrid;
     };
 
-    const HumanShipValidatorController = (Ship) => {
 
-        if (HumanShipTracker.length === 0){
-            HumanShipTracker.push(Ship);
-            return true;
-        }
-
-        for (let index = 0; index < HumanShipTracker.length; index ++){
-            if (HumanShipTracker[index] === Ship){
-                return false;
-            }
-        }
-
-        HumanShipTracker.push(Ship);
-
-        return true;
-    }
-
-
+    // Function to Generate the initial random coordinates of Computer's attacks
     const ComputerAttackController = () => {
 
         const randomCoordinateX = Math.floor(Math.random() * 10);
@@ -119,6 +102,7 @@ function GameController(){
         
     }
 
+    // Recursive Function to Validate Computer's Attacks.
     const ComputerAttackValidator = (coordinateX, coordinateY) => {
 
         if (!HumanGameBoard.receiveAttack(coordinateX, coordinateY)){
@@ -127,17 +111,22 @@ function GameController(){
             ComputerAttackValidator(randomCoordinateX, randomCoordinateY);
 
         } else {
-            HumanGameBoard.receiveAttack(coordinateX, coordinateY)
+            HumanGameBoard.receiveAttack(coordinateX, coordinateY);
         }
     }
 
+    // Function to implement Human's attacks on Computer's Board.
     const HumanAttackController = (coordinateX, coordinateY) => {
 
-        ComputerGameBoard.receiveAttack(coordinateX, coordinateY);
+        if (!ComputerGameBoard.receiveAttack(coordinateX, coordinateY)){
+            return false;
+        }
+        
         return ComputerGameBoard.gameGrid;
     }
 
 
+    // Restart Function to track winner.
     const GameRestartController = () => {
 
         const HumanGameEnd = HumanGameBoard.gameEnd();
@@ -153,6 +142,7 @@ function GameController(){
         return "No restart";
     }
 
+    // Resetting Function to reset all the variables of both the Human Player and Computer Player.
     const VariablesResetController = () => {
         HumanGameBoard.resetBoard();
         HumanGameBoard.resetShipsStatus();
@@ -169,7 +159,6 @@ function GameController(){
         HumanRandomPlacementController, 
         ComputerRandomPlacementController, 
         HumanShipPlacementController,
-        HumanShipValidatorController,
         ComputerAttackController, 
         HumanAttackController,
         GameRestartController,

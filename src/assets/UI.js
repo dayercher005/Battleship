@@ -203,16 +203,23 @@ function UIEventListeners() {
         newGame.HumanAttackController(coordinateX, coordinateY);
     }
 
-    const CellClicker = () => {
-        opponentGrid.addEventListener("click", (e) => {
-            const selectedRow = +e.target.dataset.row;
-            const selectedCell = +e.target.dataset.cell;
+    const CellClickerValidator = (e) => {
+        const selectedRow = +e.target.dataset.row;
+        const selectedCell = +e.target.dataset.cell;
 
-            renderHumanAttack(selectedRow, selectedCell);
+        if(renderHumanAttack(selectedRow, selectedCell) === false){
+            UIRestartController();
+            UpdateGrid();
+        } else {
             renderComputerAttack();
             UIRestartController();
             UpdateGrid();
-        });
+        }
+
+    }
+
+    const CellClicker = () => {
+        opponentGrid.addEventListener("click", CellClickerValidator);
     };
 
     const UIRestartController = () => {
@@ -286,6 +293,8 @@ function UIInterface(){
             submarineShip.disabled === true &&
             patrolBoat.disabled === true
         ){
+            randomizeShipsButton.disabled = true;
+            changeDirection.disabled = true;
             BattleShipUI.renderComputerShipPlacement();
             BattleShipUI.CellClicker();
             BattleShipUI.UpdateGrid();

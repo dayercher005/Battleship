@@ -63,7 +63,7 @@ class GameBoard{
 
     receiveAttack(coordinateX, coordinateY){
 
-        if(!this.coordinatesValidator(coordinateX, coordinateY)){
+        if(this.coordinatesValidator(coordinateX, coordinateY) === false){
             return false;
         }
 
