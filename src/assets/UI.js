@@ -86,92 +86,113 @@ function UIEventListeners() {
         const patrolBoat = document.querySelector("#PatrolBoat");
 
         const changeDirection = document.querySelector("#directionButton");
-        let defaultDirection = "horizontal"
+        let defaultDirection = "horizontal";
+
+
+        const CarrierButtonEventListener = (e) => {
+            const selectedRow = +e.target.dataset.row;
+            const selectedCell = +e.target.dataset.cell
+
+            if(newGame.HumanShipPlacementController(newGame.HumanGameBoard.shipArmy[0], defaultDirection, selectedRow, selectedCell)){
+                ownGrid.removeEventListener("click", CarrierButtonEventListener);
+                carrierShip.disabled = true;
+            }
+
+            UpdateGrid();
+        }
 
         carrierShip.addEventListener("click", () => {
             changeDirection.addEventListener("click", () => {
-                defaultDirection === "horizontal" ? "vertical" : "horizontal"; 
+                defaultDirection === "horizontal" ? defaultDirection = "vertical" : defaultDirection = "horizontal";
             });
 
-            ownGrid.addEventListener("click", (e) => {
-                const selectedRow = +e.target.dataset.row;
-                const selectedCell = +e.target.dataset.cell;
+            ownGrid.addEventListener("click", CarrierButtonEventListener);
+        }, {once: true});
+        
 
-                console.log(typeof(selectedCell), typeof(selectedRow));
-                newGame.HumanShipPlacementController(newGame.HumanGameBoard.shipArmy[0], defaultDirection, selectedRow, selectedCell);
-                
-                carrierShip.disabled = true;
-                UpdateGrid();
-            })
-        })
+        const BattleShipButtonEventListener = (e) => {
+            const selectedRow = +e.target.dataset.row;
+            const selectedCell = +e.target.dataset.cell
+
+            if(newGame.HumanShipPlacementController(newGame.HumanGameBoard.shipArmy[1], defaultDirection, selectedRow, selectedCell)){
+                ownGrid.removeEventListener("click", BattleShipButtonEventListener);
+                battleShip.disabled = true;
+            }
+
+            UpdateGrid();
+        }
 
         battleShip.addEventListener("click", () => {
             changeDirection.addEventListener("click", () => {
-                defaultDirection === "horizontal" ? "vertical" : "horizontal"; 
+                defaultDirection === "horizontal" ? defaultDirection = "vertical" : defaultDirection = "horizontal";
             });
 
-            ownGrid.addEventListener("click", (e) => {
-                const selectedRow = +e.target.dataset.row;
-                const selectedCell = +e.target.dataset.cell
+            ownGrid.addEventListener("click", BattleShipButtonEventListener);
+        }, {once: true});
 
-                newGame.HumanShipPlacementController(newGame.HumanGameBoard.shipArmy[1], defaultDirection, selectedRow, selectedCell);
 
-                battleShip.disabled = true;
-                UpdateGrid();
-            })
-        })
+        const DestroyerButtonEventListener = (e) => {
+            const selectedRow = +e.target.dataset.row;
+            const selectedCell = +e.target.dataset.cell
+
+            if(newGame.HumanShipPlacementController(newGame.HumanGameBoard.shipArmy[2], defaultDirection, selectedRow, selectedCell)){
+                ownGrid.removeEventListener("click", DestroyerButtonEventListener);
+                destroyerShip.disabled = true;
+            }
+
+            UpdateGrid();
+        }
 
         destroyerShip.addEventListener("click", () => {
             changeDirection.addEventListener("click", () => {
-                defaultDirection === "horizontal" ? "vertical" : "horizontal"; 
+                defaultDirection === "horizontal" ? defaultDirection = "vertical" : defaultDirection = "horizontal";
             });
 
-            ownGrid.addEventListener("click", (e) => {
-                const selectedRow = +e.target.dataset.row
-                const selectedCell = +e.target.dataset.cell
+            ownGrid.addEventListener("click", DestroyerButtonEventListener);
+        }, {once: true});
 
-                newGame.HumanShipPlacementController(newGame.HumanGameBoard.shipArmy[2], defaultDirection, selectedRow, selectedCell);
 
-                destroyerShip.disabled = true;
-                UpdateGrid();
-            });
+        const SubmarineButtonEventListener = (e) => {
+            const selectedRow = +e.target.dataset.row;
+            const selectedCell = +e.target.dataset.cell
 
-            
-        })
+            if(newGame.HumanShipPlacementController(newGame.HumanGameBoard.shipArmy[3], defaultDirection, selectedRow, selectedCell)){
+                ownGrid.removeEventListener("click", SubmarineButtonEventListener);
+                submarineShip.disabled = true;
+            }
+
+            UpdateGrid();
+        }
 
         submarineShip.addEventListener("click", () => {
             changeDirection.addEventListener("click", () => {
-                defaultDirection === "horizontal" ? "vertical" : "horizontal"; 
+                defaultDirection === "horizontal" ? defaultDirection = "vertical" : defaultDirection = "horizontal";
             });
 
-            ownGrid.addEventListener("click", (e) => {
-                const selectedRow = +e.target.dataset.row
-                const selectedCell = +e.target.dataset.cell
+            ownGrid.addEventListener("click", SubmarineButtonEventListener);
+        }, {once: true});
 
-                newGame.HumanShipPlacementController(newGame.HumanGameBoard.shipArmy[3], defaultDirection, selectedRow, selectedCell);
 
-                submarineShip.disabled = true;
-                UpdateGrid();
-            })
+        const PatrolBoatButtonEventListener = (e) => {
+            const selectedRow = +e.target.dataset.row;
+            const selectedCell = +e.target.dataset.cell
 
-        })
+            if(newGame.HumanShipPlacementController(newGame.HumanGameBoard.shipArmy[4], defaultDirection, selectedRow, selectedCell)){
+                ownGrid.removeEventListener("click", PatrolBoatButtonEventListener);
+                patrolBoat.disabled = true;
+            }
+
+            UpdateGrid();
+        }
 
         patrolBoat.addEventListener("click", () => {
-
             changeDirection.addEventListener("click", () => {
-                defaultDirection === "horizontal" ? "vertical" : "horizontal"; 
+                defaultDirection === "horizontal" ? defaultDirection = "vertical" : defaultDirection = "horizontal";
             });
 
-            ownGrid.addEventListener("click", (e) => {
-                const selectedRow = +e.target.dataset.row
-                const selectedCell = +e.target.dataset.cell
-
-                newGame.HumanShipPlacementController(newGame.ComputerGameBoard.shipArmy[4], defaultDirection, selectedRow, selectedCell);
-
-                patrolBoat.disabled = true;
-                UpdateGrid();
-            })
-        })
+            ownGrid.addEventListener("click", PatrolBoatButtonEventListener);
+        }, {once: true});
+        
     }
 
     const renderComputerAttack = () => {
@@ -184,8 +205,8 @@ function UIEventListeners() {
 
     const CellClicker = () => {
         opponentGrid.addEventListener("click", (e) => {
-            const selectedRow = e.target.dataset.row;
-            const selectedCell = e.target.dataset.cell;
+            const selectedRow = +e.target.dataset.row;
+            const selectedCell = +e.target.dataset.cell;
 
             renderHumanAttack(selectedRow, selectedCell);
             renderComputerAttack();
@@ -229,6 +250,7 @@ function UIInterface(){
 
     const startGameButton = document.querySelector("#startButton");
     const randomizeShipsButton = document.querySelector("#randomButton");
+    const changeDirection = document.querySelector("#directionButton");
     const restartButton = document.querySelector("#restartButton");
     const restartScreen = document.querySelector("#endDialog");
 
@@ -237,6 +259,7 @@ function UIInterface(){
     const destroyerShip = document.querySelector("#Destroyer");
     const submarineShip = document.querySelector("#Submarine");
     const patrolBoat = document.querySelector("#PatrolBoat");
+    
 
     const BattleShipUI = UIEventListeners();
 
@@ -246,6 +269,13 @@ function UIInterface(){
     randomizeShipsButton.addEventListener("click", () => {
         BattleShipUI.randomHumanShipPlacement();
         BattleShipUI.UpdateGrid();
+        carrierShip.disabled = true;
+        battleShip.disabled = true;
+        destroyerShip.disabled = true;
+        submarineShip.disabled = true;
+        patrolBoat.disabled = true;
+        changeDirection.disabled = true;
+        changeDirection.disabled = true;
     });
 
     startGameButton.addEventListener("click", () => {
@@ -254,6 +284,12 @@ function UIInterface(){
         BattleShipUI.UpdateGrid();
         randomizeShipsButton.disabled = true;
         startGameButton.disabled = true;
+        carrierShip.disabled = true;
+        battleShip.disabled = true;
+        destroyerShip.disabled = true;
+        submarineShip.disabled = true;
+        patrolBoat.disabled = true;
+        changeDirection.disabled = true;
     });
 
     restartButton.addEventListener("click", () => {
@@ -266,6 +302,7 @@ function UIInterface(){
         destroyerShip.disabled = false;
         submarineShip.disabled = false;
         patrolBoat.disabled = false;
+        changeDirection.disabled = false;
     })
     
 }

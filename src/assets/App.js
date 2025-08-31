@@ -11,6 +11,8 @@ function GameController(){
     const ComputerGameBoard = ComputerPlayer.getGameBoard();
     const HumanGameBoard = HumanPlayer.getGameBoard();
 
+    let HumanShipTracker = [];
+
 
     const ComputerBoardCreation = () => {
         return ComputerGameBoard.gameGrid;
@@ -83,10 +85,30 @@ function GameController(){
 
     const HumanShipPlacementController = (ShipType, direction, coordinateX, coordinateY) => {
 
-        HumanGameBoard.placeShips(ShipType, direction, coordinateX, coordinateY);
-        console.log(HumanGameBoard.gameGrid);
+        if(!HumanGameBoard.placeShips(ShipType, direction, coordinateX, coordinateY)){
+            return false
+        }
+        
         return HumanGameBoard.gameGrid;
     };
+
+    const HumanShipValidatorController = (Ship) => {
+
+        if (HumanShipTracker.length === 0){
+            HumanShipTracker.push(Ship);
+            return true;
+        }
+
+        for (let index = 0; index < HumanShipTracker.length; index ++){
+            if (HumanShipTracker[index] === Ship){
+                return false;
+            }
+        }
+
+        HumanShipTracker.push(Ship);
+
+        return true;
+    }
 
 
     const ComputerAttackController = () => {
@@ -136,6 +158,7 @@ function GameController(){
         HumanGameBoard.resetShipsStatus();
         ComputerGameBoard.resetBoard();
         ComputerGameBoard.resetShipsStatus();
+        HumanShipTracker = [];
     }
 
     return {
@@ -145,7 +168,8 @@ function GameController(){
         HumanBoardCreation, 
         HumanRandomPlacementController, 
         ComputerRandomPlacementController, 
-        HumanShipPlacementController, 
+        HumanShipPlacementController,
+        HumanShipValidatorController,
         ComputerAttackController, 
         HumanAttackController,
         GameRestartController,

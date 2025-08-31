@@ -7,11 +7,11 @@ class GameBoard{
     constructor(){
         this.gameGrid = Array(10).fill(null).map(() => Array(10).fill(null));
         this.shipArmy = [
-            new Ship(5),
-            new Ship(4),
-            new Ship(3),
-            new Ship(3),
-            new Ship(2)
+            new Ship(5, "Carrier"),
+            new Ship(4, "BattleShip"),
+            new Ship(3, "Destroyer"),
+            new Ship(3, "Submarine"),
+            new Ship(2, "PatrolBoat")
         ];
         this.firedCoordinates = [];
     }

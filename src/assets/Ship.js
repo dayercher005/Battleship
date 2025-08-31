@@ -2,10 +2,11 @@ export {Ship};
 
 class Ship{
 
-    constructor(length){
+    constructor(length, name){
         this.length = length;
         this.hitNumber = 0
         this.sunk = false;
+        this.name = name
     }
 
     hit(){
