@@ -37,9 +37,9 @@ test('HumanBoardCreation() should generate a 10 x 10 grid.', () => {
 test("HumanShipPlacementController() should place the given ship into their respective coordinate provided its valid", () => {
     expect(newGame.HumanShipPlacementController(Voyager, "vertical", 1, 1)).toEqual(
         [[null, null, null, null, null, null, null, null, null, null], 
-         [null, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, null, null, null, null, null, null, null, null], 
-         [null, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, null, null, null, null, null, null, null, null], 
-         [null, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, null, null, null, null, null, null, null, null], 
+         [null, {"hitNumber": 0, "length": 3, "name": "Voyager", "sunk": false}, null, null, null, null, null, null, null, null], 
+         [null, {"hitNumber": 0, "length": 3, "name": "Voyager", "sunk": false}, null, null, null, null, null, null, null, null], 
+         [null, {"hitNumber": 0, "length": 3, "name": "Voyager", "sunk": false}, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
          [null, null, null, null, null, null, null, null, null, null], 
@@ -101,9 +101,9 @@ test("Verify the final shipArmy property of both Game Boards.", () => {
 test("Check the final end state of both boards.", () => {
     expect(newGame.HumanGameBoard.gameGrid).toEqual(
       [[null, null, null, null, null, null, null, null, null, null], 
-       [null, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, null, null, null, null, null, null, null, null], 
-       [null, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, null, null, null, null, null, null, null, null], 
-       [null, {"hitNumber": 0, "length": 3, "sunk": false, "name": "Voyager"}, null, null, null, null, null, null, null, null], 
+       [null, {"hitNumber": 0, "length": 3, "name": "Voyager", "sunk": false}, null, null, null, null, null, null, null, null], 
+       [null, {"hitNumber": 0, "length": 3, "name": "Voyager", "sunk": false}, null, null, null, null, null, null, null, null], 
+       [null, {"hitNumber": 0, "length": 3, "name": "Voyager", "sunk": false}, null, null, null, null, null, null, null, null], 
        [null, null, null, null, null, null, null, null, null, null], 
        [null, null, null, null, null, null, null, null, null, null], 
        [null, null, null, null, null, null, null, null, null, null], 
