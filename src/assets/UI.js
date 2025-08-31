@@ -278,19 +278,23 @@ function UIInterface(){
         changeDirection.disabled = true;
     });
 
-    startGameButton.addEventListener("click", () => {
-        BattleShipUI.renderComputerShipPlacement();
-        BattleShipUI.CellClicker();
-        BattleShipUI.UpdateGrid();
-        randomizeShipsButton.disabled = true;
-        startGameButton.disabled = true;
-        carrierShip.disabled = true;
-        battleShip.disabled = true;
-        destroyerShip.disabled = true;
-        submarineShip.disabled = true;
-        patrolBoat.disabled = true;
-        changeDirection.disabled = true;
-    });
+    const startGameEventListener = (e) => {
+        if (
+           carrierShip.disabled === true &&
+            battleShip.disabled === true &&
+            destroyerShip.disabled === true &&
+            submarineShip.disabled === true &&
+            patrolBoat.disabled === true
+        ){
+            BattleShipUI.renderComputerShipPlacement();
+            BattleShipUI.CellClicker();
+            BattleShipUI.UpdateGrid();
+        } else {
+            startGameButton.removeEventListener("click", e);
+        }
+    }
+
+    startGameButton.addEventListener("click", startGameEventListener);
 
     restartButton.addEventListener("click", () => {
         restartScreen.close();
