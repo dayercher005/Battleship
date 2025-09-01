@@ -1,6 +1,6 @@
 # Battleship
 
-Live Preview: 
+Live Preview: https://dayercher005.github.io/Battleship/
 
 ## How to Run
 
