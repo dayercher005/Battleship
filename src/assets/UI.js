@@ -196,11 +196,11 @@ function UIEventListeners() {
     }
 
     const renderComputerAttack = () => {
-        newGame.ComputerAttackController();
+        return newGame.ComputerAttackController();
     };
 
     const renderHumanAttack = (coordinateX, coordinateY) => {
-        newGame.HumanAttackController(coordinateX, coordinateY);
+        return newGame.HumanAttackController(coordinateX, coordinateY);
     }
 
     const CellClickerValidator = (e) => {

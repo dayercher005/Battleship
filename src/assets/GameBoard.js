@@ -20,7 +20,7 @@ class GameBoard{
     placeShips(shipType, direction, coordinateX, coordinateY){
 
         if (!this.validShipPlacement(shipType, direction, coordinateX, coordinateY)){
-            return false
+            return false;
         }
     
         

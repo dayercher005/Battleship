@@ -118,7 +118,7 @@ function GameController(){
     // Function to implement Human's attacks on Computer's Board.
     const HumanAttackController = (coordinateX, coordinateY) => {
 
-        if (!ComputerGameBoard.receiveAttack(coordinateX, coordinateY)){
+        if (ComputerGameBoard.receiveAttack(coordinateX, coordinateY) === false){
             return false;
         }
         
