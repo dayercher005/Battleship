@@ -255,6 +255,8 @@ function UIEventListeners() {
 
 function UIInterface(){
 
+    let gameStart = true;
+
     const startGameButton = document.querySelector("#startButton");
     const randomizeShipsButton = document.querySelector("#randomButton");
     const changeDirection = document.querySelector("#directionButton");
@@ -291,13 +293,16 @@ function UIInterface(){
             battleShip.disabled === true &&
             destroyerShip.disabled === true &&
             submarineShip.disabled === true &&
-            patrolBoat.disabled === true
+            patrolBoat.disabled === true &&
+            gameStart === true
         ){
+            startGameButton.removeEventListener("click", e)
             randomizeShipsButton.disabled = true;
             changeDirection.disabled = true;
             BattleShipUI.renderComputerShipPlacement();
             BattleShipUI.CellClicker();
             BattleShipUI.UpdateGrid();
+            gameStart = false;
         } else {
             startGameButton.removeEventListener("click", e);
         }
@@ -316,6 +321,7 @@ function UIInterface(){
         submarineShip.disabled = false;
         patrolBoat.disabled = false;
         changeDirection.disabled = false;
+        gameStart = true;
     })
     
 }
